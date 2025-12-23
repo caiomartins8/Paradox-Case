@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+figure {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+#main-carregamento {
+    height: 100vh;
+    width: 100%;
+    background-image: url('images/background/back1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#logo {
+    width: 60%;
+    max-width: 500px;
+    height: auto;
+}
+
+.loader-container {
+    width: 100%;
+    background-color: #1E1E1E;
+    height: 25px;
+    border-radius: 4px;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+.loader-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #A8742B, #73501e);
+    border-radius: 4px;
+    animation: carregar 3s ease-in-out infinite;
+}
+
+@keyframes carregar {
+    0% {
+        width: 0%;
+    }
+
+    50% {
+        width: 50%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+#carregando-jogo {
+    font-family: 'IM Fell English';
+    color: white;
+    text-align: start;
+    width: 80%;
+}
+
+#body-inicial {
+    background-image: url('images/background/back1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+
+#main-inicial {
+    height: 100vh;
+    width: 100%;
+    margin-top: 40px;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    background-color: #262626;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 50px 20px 30px 20px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    overflow: visible !important;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+p dialog {
+    font-size: 0.4rem;
+}
+
+.img-flutuante {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+dialog button {
+    background-color: #1E1E1E;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    margin-top: 15px;
+    border: none;
+    border-radius: 4px;
+}
+
+dialog input {
+    background-color: #D9D9D9;
+    border: solid 2px #191919;
+    border-radius: 3px;
+    color: #8A8A8A;
+    height: 25px;
+    width: 80%;
+    padding: 5px;
+}
+
+#body-inicial {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#header-inicial {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#logo-header-inicial {
+    width: 100px;
+}
+
+#recompensas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.recompensas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+    font-family: 'Cinzel';
+    color: white;
+}
+
+.recompensas img {
+    width: 20px;
+}
+
+#aviso-nome {
+    color: white;
+    font-family: 'Cinzel';
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.sec-pergaminho {
+    width: 100%;
+    min-height: 350px;
+
+    background-image: url(images/elementos/Pergaminho.png);
+    background-position: center;
+    background-repeat: no-repeat;
+
+    background-size: contain;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec-pergaminho nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sec-pergaminho a {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    -webkit-text-stroke: #A8592B 0.1px;
+    font-family: 'IM Fell English';
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.sec-pergaminho a:hover {
+    transform: scale(1.2);
+}
+
+.a-transparente {
+    color: rgba(0, 0, 0, 0.3) !important; 
+    -webkit-text-stroke: 1px rgba(62, 39, 35, 0.3) !important;
+    pointer-events: none; /* desativa cliques */
+    cursor: not-allowed;
+    position: relative; 
+    display: inline-block; 
+}
+
+.a-transparente::after {
+    content: ''; 
+    background-image: url('images/elementos/cadeado.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px; 
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
