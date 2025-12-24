@@ -66,4 +66,27 @@ const modal = document.getElementById("modalBoasVindas");
     };
 
 
-  
+  let indiceAtual = 0;
+const herois = document.querySelectorAll('#main-heroi article');
+
+function mostrarHeroi(index) {
+    herois.forEach(heroi => {
+        heroi.style.display = 'none';
+    });
+
+    if (index >= herois.length) {
+        indiceAtual = 0;
+    } else if (index < 0) {
+        indiceAtual = herois.length - 1;
+    } else {
+        indiceAtual = index;
+    }
+
+    herois[indiceAtual].style.display = 'flex';
+}
+
+function mudarHeroi(direcao) {
+    mostrarHeroi(indiceAtual + direcao);
+}
+
+mostrarHeroi(0);

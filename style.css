@@ -231,24 +231,148 @@ dialog input {
 }
 
 .a-transparente {
-    color: rgba(0, 0, 0, 0.3) !important; 
+    color: rgba(0, 0, 0, 0.3) !important;
     -webkit-text-stroke: 1px rgba(62, 39, 35, 0.3) !important;
-    pointer-events: none; /* desativa cliques */
+    pointer-events: none;
+    /* desativa cliques */
     cursor: not-allowed;
-    position: relative; 
-    display: inline-block; 
+    position: relative;
+    display: inline-block;
 }
 
 .a-transparente::after {
-    content: ''; 
-    background-image: url('images/elementos/cadeado.png'); 
+    content: '';
+    background-image: url('images/elementos/cadeado.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 40px; 
+    width: 40px;
     height: 40px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#main-heroi {
+    height: 87vh;
+    width: 100%;
+    text-align: center;
+    font-family: 'IM Fell English';
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main-heroi article {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+#main-heroi img {
+    width: 250px;
+}
+
+#main-heroi h1 {
+    -webkit-text-stroke: 0.1px #bc4e0e;
+    color: black;
+    font-size: 1.5rem;
+}
+
+#main-heroi nav {
+    width: 95%;
+    background: linear-gradient(to right, #bc4e0e, #c75d16);
+    padding: 10px;
+
+}
+
+#main-heroi nav ul {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#main-heroi button {
+    color: white;
+    background-color: #1E1E1E;
+    font-family: "Cinzel";
+    border-radius: 4px;
+    width: 60%;
+    font-size: 1rem;
+    padding: 6px;
+    border: none;
+}
+ 
+#main-heroi a {
+    width: 100%;
+}
+
+
+.seta-nav {
+    background: none !important;
+    border: none;
+    font-size: 3rem;
+    color: #bc4e0e;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto !important;
+    padding: 10px !important;
+    z-index: 10;
+}
+
+.seta-nav:hover {
+    color: #c75d16;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.seta-esq {
+    left: 10px;
+}
+
+.seta-dir {
+    right: 10px;
+}
+
+.heroi-card {
+    animation: fadeEffect 0.5s;
+}
+
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+strong {
+    font-size: 1.5rem;
+}
+
+.h1-vilao{
+        -webkit-text-stroke: 1px rgba(255, 0, 0, 0.307) !important;
+}
+
+.nav-vilao {
+    width: 80% !important;
+    font-size: 0.7rem;
+    color: white;
+    background-color: #1E1E1E !important;
+    padding: 10px;
+}
+
+.nav-vilao ul {
+    list-style-type: none;
+
+}
+

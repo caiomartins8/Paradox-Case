@@ -11,23 +11,74 @@
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=IM+Fell+English:ital@0;1&display=swap"
         rel="stylesheet">
     <link rel="icon" type="images/png" href="images/favicon.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <title>Paradox Case - Heróis</title>
 </head>
 
 <body id="body-inicial">
 
     <header id="header-inicial">
-        <a href="pageInicial.html"> 
+        <a href="pageInicial.html">
             <img src="images/favicon.png" alt="" id="logo-header-inicial">
         </a>
 
     </header>
 
-    <main>
+    <main id="main-heroi">
+        <section id="main-heroi">
+
+            <button class="seta-nav seta-esq" onclick="mudarHeroi(-1)">&#10094;</button>
+
+            <article class="heroi-card">
+                <h1>EISEN (O PEQUENO HERÓI)</h1>
+                <img src="images/herois/anao.png" alt="">
+                <nav>
+                    <ul>
+                        <li>HP : <br>1250máx </li>
+                        <li>CRT : <br>450máx</li>
+                        <li>ATK : <br>250máx</li>
+                        <li>CRA : <br>150máx</li>
+                        <li>DF : <br>350máx</li>
+                    </ul>
+                </nav>
+                <a href="pageInicial.html"> <button>SELECIONAR HERÓI</button></a>
+            </article>
+
+            <article class="heroi-card" style="display: none;">
+                <h1>SINDEL (RAINHA DO VAZIO)</h1>
+                <img src="images/herois/bruxa.png" alt="">
+                <nav>
+                    <ul>
+                        <li>HP : <br>9000máx </li>
+                        <li>CRT : <br>600máx</li>
+                        <li>ATK : <br>300máx</li>
+                        <li>CRA : <br>400máx</li>
+                        <li>DF : <br>200máx</li>
+                    </ul>
+                </nav>
+                <a href="pageInicial.html"> <button>SELECIONAR HERÓI</button></a>
+            </article>
+
+            <article class="heroi-card" style="display: none;">
+                <h1>VÊNUS (HERDEIRO CRISTAL)</h1>
+                <img src="images/herois/elfo.png" alt="">
+                <nav>
+                    <ul>
+                        <li>HP : <br>800máx </li>
+                        <li>CRT : <br>80máx</li>
+                        <li>ATK : <br>400máx</li>
+                        <li>CRA : <br>100máx</li>
+                        <li>DF : <br>150máx</li>
+                    </ul>
+                </nav>
+                <a href="pageInicial.html"> <button>SELECIONAR HERÓI</button></a>
+            </article>
+
+            <button class="seta-nav seta-dir" onclick="mudarHeroi(1)">&#10095;</button>
+
+        </section>
 
     </main>
-    
 
     <script src="script.js"></script>
 </body>
