@@ -90,3 +90,18 @@ function mudarHeroi(direcao) {
 }
 
 mostrarHeroi(0);
+
+function abrirModal(idModal) {
+    const modal = document.getElementById(idModal);
+    if(modal) {
+        modal.classList.remove('hide');
+    }
+}
+
+function fecharModal(idModal) {
+    const modal = document.getElementById(idModal);
+    if(modal) {
+        modal.classList.add('hide');
+    }
+}
+
