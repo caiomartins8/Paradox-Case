@@ -249,28 +249,6 @@ document.addEventListener("DOMContentLoaded", () => {
     vilaoBtn.onclick = gerarVilao;
 });
 
-/* HUD */
-function atualizarHeroi() {
-    const porcentagem = (heroi.hp / heroi.hpMax) * 100;
-    document.querySelector(".bar-fill").style.width = porcentagem + "%";
-}
-
-
-function atualizarVilao() {
-    const porcentagem = (vilao.hp / vilao.hpMax) * 100;
-    document.querySelector(".bar-fill-vilao").style.width = porcentagem + "%";
-    document.querySelector(".char-name-vilao").innerText = vilao.nome;
-
-    // ☠️ MORTE DO VILÃO
-    if (vilao.hp <= 0) {
-        monstrosDerrotados++;
-        console.log("Monstros derrotados:", monstrosDerrotados);
-
-        setTimeout(() => {
-            gerarVilao();
-        }, 1000);
-    }
-}
 
 
 
@@ -286,32 +264,6 @@ function rolarDado() {
         `O número sorteado foi : ${n}`;
 }
 
-function gerarVilao() {
-    const escolhido = monstros[Math.floor(Math.random() * monstros.length)];
-
-    vilao = {
-        nome: escolhido.nome,
-        hp: escolhido.hpMax,
-        hpMax: escolhido.hpMax,
-        atk: escolhido.atk
-    };
-
-    document.querySelector("#dp-vilao img").src = escolhido.img;
-    document.querySelector(".char-name-vilao").innerText = vilao.nome;
-
-    atualizarVilao();
-    turno = "heroi";
-
-    if (vilao.hp <= 0) {
-        monstrosDerrotados++;
-        console.log("Monstros derrotados:", monstrosDerrotados);
-
-        setTimeout(() => {
-            gerarVilao();
-        }, 1000);
-    }
-
-}
 
 
 
@@ -359,18 +311,5 @@ function curar() {
     console.log("Cura:", cura);
     atualizarHeroi();
     turnoVilao();
-}
-
-
-/* TURNO DO VILÃO */
-function turnoVilao() {
-    turno = "vilao";
-
-    setTimeout(() => {
-        heroi.hp -= Math.max(50, vilao.atk - heroi.def * 0.3);
-        atualizarHeroi();
-        turno = "heroi";
-        mult = 1;
-    }, 1200);
 }
 
