@@ -46,7 +46,7 @@
             <nav>
 
                 <a href="pageHerois.html">Heróis</a>
-                <a href="pageMissoes.html">Missões</a>
+                <a href="#" onclick="verificarMissao(event)">Missões</a>
                 <a href="pageColecao.html">Coleção</a>
             </nav>
 
@@ -54,6 +54,13 @@
 
         </section>
     </main>
+
+    <div id="toast-box" class="toast hidden">
+        <div class="toast-content">
+            <span id="toast-msg">Herói escolhido!</span>
+        </div>
+    </div>
+
 
     <script src="script.js"></script>
 </body>
