@@ -74,6 +74,13 @@ figure {
 
 }
 
+#body-herois {
+    background-image: url('images/background/back1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
 
 #main-inicial {
     height: 100vh;

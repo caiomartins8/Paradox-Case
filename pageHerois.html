@@ -15,7 +15,7 @@
     <title>Paradox Case - Heróis</title>
 </head>
 
-<body id="body-inicial">
+<body id="body-inicial" class="page-loading">
 
     <header id="header-inicial">
         <a href="pageInicial.html">
@@ -25,7 +25,7 @@
     </header>
 
     <main id="main-heroi">
-        <section id="main-heroi">
+        <section id="sec-heroi">
 
             <button class="seta-nav seta-esq" onclick="mudarHeroi(-1)">&#10094;</button>
 
@@ -41,37 +41,42 @@
                         <li>DF : <br>350máx</li>
                     </ul>
                 </nav>
-<button onclick="selecionarHeroi('Eisen')">SELECIONAR HERÓI</button>            </article>
+                <button onclick="selecionarHeroi('Eisen', 'images/herois/anao.png')">
+                    SELECIONAR HERÓI
+                </button>
+            </article>
 
-            <article class="heroi-card" style="display: none;">
-                <h1>SINDEL (RAINHA DO VAZIO)</h1>
-                <img src="images/herois/bruxa.png" alt="">
-                <nav>
-                    <ul>
-                        <li>HP : <br>9000máx </li>
-                        <li>CRT : <br>600máx</li>
-                        <li>ATK : <br>300máx</li>
-                        <li>CRA : <br>400máx</li>
-                        <li>DF : <br>200máx</li>
-                    </ul>
-                </nav>
-<button onclick="selecionarHeroi('Sindel')">SELECIONAR HERÓI</button>            </article>
+                <article class="heroi-card" style="display: none;">
+                    <h1>SINDEL (RAINHA DO VAZIO)</h1>
+                    <img src="images/herois/bruxa.png" alt="">
+                    <nav>
+                        <ul>
+                            <li>HP : <br>9000máx </li>
+                            <li>CRT : <br>600máx</li>
+                            <li>ATK : <br>300máx</li>
+                            <li>CRA : <br>400máx</li>
+                            <li>DF : <br>200máx</li>
+                        </ul>
+                    </nav>
+                    <button onclick="selecionarHeroi('Sindel' , 'images/herois/bruxa.png')">SELECIONAR HERÓI</button>
+                </article>
 
-            <article class="heroi-card" style="display: none;">
-                <h1>VÊNUS (HERDEIRO CRISTAL)</h1>
-                <img src="images/herois/elfo.png" alt="">
-                <nav>
-                    <ul>
-                        <li>HP : <br>800máx </li>
-                        <li>CRT : <br>80máx</li>
-                        <li>ATK : <br>400máx</li>
-                        <li>CRA : <br>100máx</li>
-                        <li>DF : <br>150máx</li>
-                    </ul>
-                </nav>
-<button onclick="selecionarHeroi('Venus')">SELECIONAR HERÓI</button>            </article>
+                <article class="heroi-card" style="display: none;">
+                    <h1>VÊNUS (HERDEIRO CRISTAL)</h1>
+                    <img src="images/herois/elfo.png" alt="">
+                    <nav>
+                        <ul>
+                            <li>HP : <br>800máx </li>
+                            <li>CRT : <br>80máx</li>
+                            <li>ATK : <br>400máx</li>
+                            <li>CRA : <br>100máx</li>
+                            <li>DF : <br>150máx</li>
+                        </ul>
+                    </nav>
+                    <button onclick="selecionarHeroi('Venus', 'images/herois/elfo.png')">SELECIONAR HERÓI</button>
+                </article>
 
-            <button class="seta-nav seta-dir" onclick="mudarHeroi(1)">&#10095;</button>
+                <button class="seta-nav seta-dir" onclick="mudarHeroi(1)">&#10095;</button>
 
         </section>
 
