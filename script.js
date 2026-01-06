@@ -719,8 +719,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const ARAKH = {
     nome: "Arakh, Asceta do Vazio",
-    hpMax: 100,
-    hp: 100,
+    hpMax: 1700,
+    hp: 1700,
     atk: 280,
     def: 250,
     auraVazioAtiva: false,
