@@ -1,4 +1,4 @@
-// Função para mudar de página (Loading Bar)
+// função de carregamento da página
 function iniciarCarregamento() {
     const barra = document.querySelector(".loader-bar");
     if (barra) {
@@ -18,7 +18,7 @@ function iniciarCarregamento() {
     }
 }
 
-// Funções do Modal (Abrir/Fechar genérico)
+// função de abrir e fechar mdoal
 function abrirModal(idModal) {
     const modal = document.getElementById(idModal);
     if (modal) {
@@ -33,16 +33,16 @@ function fecharModal(idModal) {
     }
 }
 
-// Função de Selecionar Herói (Salva e Redireciona)
+// função de selecionar herói (salva e redireciona)
 function selecionarHeroi(nome, imagem) {
     localStorage.setItem("heroiSelecionado", nome);
     localStorage.setItem("heroiImagem", imagem);
-    localStorage.setItem("exibirToast", "true"); // 👈 ESSENCIAL
+    localStorage.setItem("exibirToast", "true");
 
     window.location.href = "pageInicial.html";
 }
 
-/* LÓGICA DO CARROSSEL DE HERÓIS */
+// lógica carrossel de herói 
 
 let indiceAtual = 0;
 
@@ -60,7 +60,7 @@ function mudarHeroi(direcao) {
     herois[indiceAtual].style.display = "flex";
 }
 
-
+//função para ver se a pessoa esoclheu um héroi antes de netrar na missão
 function verificarMissao(event) {
     event.preventDefault();
 
@@ -85,13 +85,10 @@ function verificarMissao(event) {
     window.location.href = "pageMissoes.html";
 }
 
-/* =========================================
-   2. VARIÁVEIS GLOBAIS DO JOGO
-   ========================================= */
-console.log("JS CARREGADO");
+//variáveis globais
 
 let monstrosDerrotados = 0;
-let listaMonstrosApi = []; // LISTA GLOBAL PARA A API
+let listaMonstrosApi = []; // lista de monstros da API
 
 const HEROIS = {
     Eisen: { nome: "Eisen", hpMax: 1250, hp: 1250, atk: 250, crt: 450, cura: 150, def: 350 },
@@ -117,34 +114,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-/* =========================================
-   3. INICIALIZAÇÃO (DOM LOADED)
-   ========================================= */
+
+//d om content loaded
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- CARREGAR API ASSIM QUE A PÁGINA ABRE ---
     carregarListaDeMonstros();
-    // --------------------------------------------
 
-    // Carrossel
+    // carrossel de heróis
     const heroisCarrossel = document.querySelectorAll(".heroi-card");
     if (heroisCarrossel.length > 0) {
         heroisCarrossel[0].style.display = "flex";
     }
 
-
-    // Modal de Boas Vindas
+    // modal dom 
     const modalBoasVindas = document.getElementById("modalBoasVindas");
     const btnConfirmar = document.getElementById("btnFechar");
     const inputNome = document.getElementById("inputPegarNome");
     const avisoNomeElemento = document.getElementById("aviso-nome");
 
+    // atualizar texto de inicio com nome 
     function atualizarTextoAviso(nome) {
         if (avisoNomeElemento) {
             avisoNomeElemento.innerHTML = `Olá ${nome}, antes de Entrar em uma <br> missão escolha seu herói!`;
         }
     }
 
+    // modal nome jogador
     if (modalBoasVindas || avisoNomeElemento) {
         const nomeSalvo = localStorage.getItem("nomeDoJogador");
         if (nomeSalvo) {
@@ -154,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (modalBoasVindas) modalBoasVindas.showModal();
         }
 
+        // confirmar nome jogador
         if (btnConfirmar) {
             btnConfirmar.onclick = function () {
                 let nomeDigitado = inputNome.value;
@@ -168,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Toast Inicial
+    // toast de heroi escolhido 
     const toastBox = document.getElementById('toast-box');
     if (toastBox && localStorage.getItem('exibirToast') === 'true') {
         let heroiNome = localStorage.getItem('heroiSelecionado');
@@ -184,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem('exibirToast');
     }
 
-    // Setup do Combate (Se estiver na página de combate)
+    // lógica de combate
     const nomeHeroi = localStorage.getItem("heroiSelecionado");
     if (HEROIS[nomeHeroi]) { // Só roda se tiver herói válido (página de missão)
         heroi = structuredClone(HEROIS[nomeHeroi]);
@@ -210,28 +206,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const nomeHeroiUI = document.getElementById("nome-heroi");
-const imgHeroiUI = document.getElementById("img-heroi");
+    const imgHeroiUI = document.getElementById("img-heroi");
 
-if (nomeHeroiUI && imgHeroiUI) {
-    const nome = localStorage.getItem("heroiSelecionado");
-    const img = localStorage.getItem("heroiImagem");
+    // atualiza UI do herói selecionado
+    if (nomeHeroiUI && imgHeroiUI) {
+        const nome = localStorage.getItem("heroiSelecionado");
+        const img = localStorage.getItem("heroiImagem");
 
-    if (!nome || !img) {
-        alert("Nenhum herói selecionado!");
-        window.location.href = "pageHerois.html";
-        return;
+        if (!nome || !img) {
+            alert("Nenhum herói selecionado!");
+            window.location.href = "pageHerois.html";
+            return;
+        }
+
+        nomeHeroiUI.innerText = nome;
+        imgHeroiUI.src = img;
     }
-
-    nomeHeroiUI.innerText = nome;
-    imgHeroiUI.src = img;
-}
 
 });
 
-/* =========================================
-   4. LÓGICA DA API (FETCH)
-   ========================================= */
 
+//FETCH
 // Função para buscar a lista de todos os monstros
 async function carregarListaDeMonstros() {
     try {
@@ -241,27 +236,23 @@ async function carregarListaDeMonstros() {
         console.log("Lista de monstros carregada via API!", listaMonstrosApi.length, "encontrados.");
     } catch (erro) {
         console.error("Erro ao buscar lista de monstros:", erro);
-        // Fallback simples
         listaMonstrosApi = [{ name: "Monstro Genérico", url: null }];
     }
 }
 
 // Função Principal de Gerar Vilão
 async function gerarVilao() {
-    // 1. Verifica se a lista existe
     if (listaMonstrosApi.length === 0) {
         console.log("Aguardando API ou lista vazia...");
         alert("Aguarde, carregando monstros da API...");
-        // Tenta carregar novamente
         carregarListaDeMonstros();
         return;
     }
 
-    // 2. Sorteia um monstro da lista
+    // pega monstro aleátorio da lista 
     const indiceSorteado = Math.floor(Math.random() * listaMonstrosApi.length);
     const monstroBasico = listaMonstrosApi[indiceSorteado];
 
-    // Feedback visual
     const nomeVilaoEl = document.querySelector(".char-name-vilao");
     if (nomeVilaoEl) nomeVilaoEl.innerText = "Invocando " + monstroBasico.name + "...";
 
@@ -269,11 +260,11 @@ async function gerarVilao() {
         let statsVilao = {};
 
         if (monstroBasico.url) {
-            // 3. Busca detalhes (HP, Stats)
+            // busca detalhes (HP, Stats)
             const respostaDetalhes = await fetch("https://www.dnd5eapi.co" + monstroBasico.url);
             const detalhes = await respostaDetalhes.json();
 
-            // Ajuste de Balanceamento para o seu jogo
+            // ajuste de baleancemaneto para o jogo
             const multiplicadorVida = 15;
             const nivel = detalhes.challenge_rating || 1;
 
@@ -284,11 +275,11 @@ async function gerarVilao() {
             };
 
         } else {
-            // Fallback se não tiver URL
+            // caso de erro e nao puxe detalhes
             statsVilao = { nome: "Monstro Desconhecido", hpMax: 800, atk: 200 };
         }
 
-        // 4. Define o objeto Vilão Global
+        // define o objeto vilão 
         vilao = {
             nome: statsVilao.nome,
             hp: statsVilao.hpMax,
@@ -296,7 +287,7 @@ async function gerarVilao() {
             atk: statsVilao.atk
         };
 
-        // 5. Imagem (Aleatória Local, pois API não tem)
+        // imagem local para o vilão
         const imagensLocais = [
             "images/vilao-teste/orc.png",
             "images/vilao-teste/goblin.png",
@@ -308,11 +299,11 @@ async function gerarVilao() {
         const imgEl = document.querySelector("#dp-vilao img");
         if (imgEl) imgEl.src = imgSorteada;
 
-        // Atualiza UI
+        // atualiza UI
         if (nomeVilaoEl) nomeVilaoEl.innerText = vilao.nome;
         atualizarVilao();
 
-        turno = "heroi"; // Passa a vez
+        turno = "heroi";
 
     } catch (erro) {
         console.error("Erro ao gerar vilão detalhado:", erro);
@@ -320,10 +311,9 @@ async function gerarVilao() {
     }
 }
 
-/* =========================================
-   5. GAMEPLAY E COMBATE
-   ========================================= */
+//GAMEPLAY E COMBATE
 
+//atualiza vida do heroi 
 function atualizarHeroi() {
     if (!heroi) return;
     const porcentagem = (heroi.hp / heroi.hpMax) * 100;
@@ -331,6 +321,8 @@ function atualizarHeroi() {
     if (barra) barra.style.width = porcentagem + "%";
 }
 
+
+//atualiza vida do vilao
 function atualizarVilao() {
     if (!vilao) return;
     const porcentagem = (vilao.hp / vilao.hpMax) * 100;
@@ -340,11 +332,11 @@ function atualizarVilao() {
     if (barra) barra.style.width = porcentagem + "%";
     if (nomeEl) nomeEl.innerText = vilao.nome;
 
-    // ☠️ MORTE DO VILÃO
+    //  MORTE DO VILÃO
     if (vilao.hp <= 0) {
         monstrosDerrotados++;
 
-        // 💰 recompensas por monstro
+        // recompensas por monstro
         goldGanho += 50;
         xpGanho += 60;
 
@@ -364,6 +356,7 @@ function atualizarVilao() {
 
 }
 
+// rola o dado 
 function rolarDado() {
     if (turno !== "heroi") return;
 
@@ -384,7 +377,7 @@ function rolarDado() {
     if (textoDado) textoDado.innerText = `O número sorteado foi : ${n}`;
 }
 
-
+//botao de ataque 
 function atacar() {
     if (!podeAgir()) return;
 
@@ -397,7 +390,7 @@ function atacar() {
 }
 
 
-
+//botao de ataque critico
 function critico() {
     if (!podeAgir()) return;
 
@@ -410,14 +403,14 @@ function critico() {
     vilao.hp -= dano;
     if (vilao.hp < 0) vilao.hp = 0;
 
-    criticoBloqueado = true; // 🔒 trava o crítico
+    criticoBloqueado = true; // trava o crítico
 
     atualizarVilao();
     fimTurnoHeroi();
 }
 
 
-
+//botao de cura
 function curar() {
     if (!podeAgir()) return;
 
@@ -430,7 +423,7 @@ function curar() {
 }
 
 
-
+// turno do vilão de ataque
 function turnoVilao() {
     turno = "vilao";
 
@@ -451,7 +444,7 @@ function turnoVilao() {
     }, 1200);
 }
 
-
+//verifica se pode agir
 function podeAgir() {
     if (!vilao) {
         alert("Gere um inimigo primeiro!");
@@ -468,14 +461,14 @@ function podeAgir() {
     return true;
 }
 
-
+// fim do turno do herói
 function fimTurnoHeroi() {
-    dadoRolado = false; // 🔓 libera o dado pro próximo turno
+    dadoRolado = false; //  libera o dado pro próximo turno
     mult = 1;
 
     turnosHeroi++;
 
-    // 🔓 libera o crítico a cada 2 turnos do herói
+    //  libera o crítico a cada 2 turnos do herói
     if (turnosHeroi % 2 === 0) {
         criticoBloqueado = false;
     }
@@ -483,9 +476,9 @@ function fimTurnoHeroi() {
     turnoVilao();
 }
 
-
+// mostra modal de vitória
 function mostrarVitoria() {
-    // Recupera dados salvos ou cria do zero
+
     let goldTotal = parseInt(localStorage.getItem("gold")) || 0;
     let xpTotal = parseInt(localStorage.getItem("xp")) || 0;
     let nivel = parseInt(localStorage.getItem("nivel")) || 1;
@@ -493,18 +486,18 @@ function mostrarVitoria() {
     goldTotal += goldGanho;
     xpTotal += xpGanho;
 
-    // 🆙 cálculo de nível (100 XP = 1 nível)
+    // cálculo de nível (100 XP = 1 nível)
     while (xpTotal >= 100) {
         xpTotal -= 100;
         nivel++;
     }
 
-    // Salva tudo
+    // salva tudo
     localStorage.setItem("gold", goldTotal);
     localStorage.setItem("xp", xpTotal);
     localStorage.setItem("nivel", nivel);
 
-    // Atualiza modal
+    // atualiza modal
     document.querySelector("#overlay-vitoria p").innerText =
         `Monstros derrotados: ${monstrosDerrotados}`;
 
@@ -523,13 +516,14 @@ function mostrarVitoria() {
     abrirModal("overlay-vitoria");
 }
 
+// função para ir para a página inicial
 function irParaInicio() {
     window.location.href = "pageInicial.html";
 }
 
 const gold = parseInt(localStorage.getItem("gold")) || 0;
 const nivel = parseInt(localStorage.getItem("nivel")) || 0;
-
+// atualiza recompensas no header
 const recompensas = document.querySelectorAll("#recompensas-header p");
 
 if (recompensas.length >= 2) {
