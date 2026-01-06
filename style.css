@@ -150,7 +150,7 @@ dialog input {
     background-color: #D9D9D9;
     border: solid 2px #191919;
     border-radius: 3px;
-    color: #8A8A8A;
+    color: #000000;
     height: 25px;
     width: 80%;
     padding: 5px;
@@ -760,3 +760,127 @@ h3 {
     opacity: 1;
     pointer-events: auto;
 }
+
+/* Overlay do Arakh */
+#overlay-arakh {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.85), #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
+
+/* Caixa do modal */
+#modal-arakh {
+    background: linear-gradient(180deg, #050505, #0d0d0d);
+    border: 2px solid #1aff6a;
+    box-shadow: 0 0 40px rgba(26, 255, 106, 0.35);
+    border-radius: 16px;
+    padding: 28px;
+    width: min(70%, 320px);
+    color: #eafff2;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    animation: surgirVazio 0.5s ease-out;
+}
+
+/* Título */
+#modal-arakh h2 {
+    color: #1aff6a;
+    margin-bottom: 16px;
+    text-shadow: 0 0 10px rgba(26,255,106,0.6);
+}
+
+/* Texto */
+#modal-arakh p {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+/* Botão */
+#modal-arakh button {
+    margin-top: 18px;
+    padding: 10px 22px;
+    background: #1aff6a;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Cinzel';
+}
+
+#modal-arakh button:hover {
+    background: #0ecc55;
+    transform: scale(1.05);
+}
+
+
+#body-combate3 .sec-herois img {
+    width: 180px;
+    height: 180px;
+}
+
+/*   MODAL RESSURREIÇÃO ARAKH */
+
+
+#overlay-arakh-revive {
+    position: fixed;
+    background: radial-gradient(circle at center, rgba(0, 40, 30, 0.9), rgba(0, 0, 0, 0.98));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#modal-arakh-revive {
+    background: linear-gradient(145deg, #020403, #061511);
+    border: 2px solid #1aff8c;
+    box-shadow:
+        0 0 25px rgba(26, 255, 140, 0.5),
+        0 0 80px rgba(0, 255, 170, 0.25);
+    border-radius: 18px;
+    padding: 2rem 1rem;
+    max-width: 320px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    animation: pulseGlow 2s infinite alternate;
+}
+
+#modal-arakh-revive h2 {
+    color: #1aff8c;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(26, 255, 140, 0.6);
+}
+
+#modal-arakh-revive p {
+    color: #e0fff3;
+    font-family: 'IM Fell English', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1.8rem;
+}
+
+#modal-arakh-revive button {
+    background: linear-gradient(145deg, #0a2a1f, #0f3b2d);
+    border: 1px solid #1aff8c;
+    color: #1aff8c;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#modal-arakh-revive button:hover {
+    background: #1aff8c;
+    color: #02110c;
+    box-shadow: 0 0 20px rgba(26, 255, 140, 0.8);
+}
+

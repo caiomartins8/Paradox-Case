@@ -17,6 +17,7 @@ function iniciarCarregamento() {
         }
     }
 }
+iniciarCarregamento()
 
 // função de abrir e fechar mdoal
 function abrirModal(idModal) {
@@ -26,12 +27,28 @@ function abrirModal(idModal) {
     }
 }
 
+// fechar modal 
 function fecharModal(idModal) {
     const modal = document.getElementById(idModal);
-    if (modal) {
-        modal.classList.add('hide');
+    if (modal) modal.classList.add("hide");
+
+    // quando fecha o modal da ressurreição
+    if (idModal === "overlay-arakh-revive") {
+
+        // volta música do boss
+        const musicaBoss = document.getElementById("boss-music");
+        if (musicaBoss) {
+            musicaBoss.currentTime = 0;
+            musicaBoss.play().catch(() => { });
+        }
+
+        // Arakh ataca primeiro
+        setTimeout(() => {
+            turnoVilao();
+        }, 800);
     }
 }
+
 
 // função de selecionar herói (salva e redireciona)
 function selecionarHeroi(nome, imagem) {
@@ -92,7 +109,7 @@ let listaMonstrosApi = []; // lista de monstros da API
 
 const HEROIS = {
     Eisen: { nome: "Eisen", hpMax: 1250, hp: 1250, atk: 250, crt: 450, cura: 150, def: 350 },
-    Sindel: { nome: "Sindel", hpMax: 900, hp: 900, atk: 300, crt: 600, cura: 400, def: 200 },
+    Sindel: { nome: "Sindel", hpMax: 900, hp: 900, atk: 350, crt: 600, cura: 400, def: 200 },
     Venus: { nome: "Vênus", hpMax: 800, hp: 800, atk: 400, crt: 800, cura: 100, def: 150 }
 };
 
@@ -107,8 +124,11 @@ let turnosHeroi = 0;          // conta turnos do herói
 let criticoBloqueado = false;  // bloqueia crítico se usado
 let goldGanho = 0;
 let xpGanho = 0;
+let monstrosParaVencer = 3; // padrão
+
 
 document.addEventListener("DOMContentLoaded", () => {
+
     if (document.body.classList.contains("page-loading")) {
         iniciarCarregamento();
     }
@@ -117,6 +137,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //d om content loaded
 document.addEventListener("DOMContentLoaded", () => {
+
+    // define número de monstros para vencer conforme a página
+    const paginaAtual = window.location.pathname;
+
+    if (paginaAtual.includes("pageCombate1")) {
+        monstrosParaVencer = 3; // Pântano
+    }
+
+    else if (paginaAtual.includes("pageCombate2")) {
+        monstrosParaVencer = 5; // Masmorra
+    }
+
+    else if (paginaAtual.includes("pageCombate3")) {
+        monstrosParaVencer = 7; // Castelo (exemplo)
+    }
+
 
     carregarListaDeMonstros();
 
@@ -196,13 +232,50 @@ document.addEventListener("DOMContentLoaded", () => {
         const dadoBtn = document.querySelector("#btn-dado");
         const vilaoBtn = document.querySelector("#dp-vilao button");
 
-        if (atkBtn && crtBtn && curaBtn && dadoBtn && vilaoBtn) {
+        if (vilaoBtn) {
+            vilaoBtn.onclick = gerarVilao;
+        }
+        // gera vilão automaticamente na página de combate
+        if (window.location.pathname.includes("pageCombate1") ||
+            window.location.pathname.includes("pageCombate2")) {
+            gerarVilao();
+        }
+        if (window.location.pathname.includes("pageCombate3")) {
+            // === BOSS FINAL ===
+            vilao = structuredClone(ARAKH);
+
+            const nomeVilaoEl = document.querySelector(".char-name-vilao");
+            const imgVilaoEl = document.querySelector("#dp-vilao img");
+
+            if (nomeVilaoEl) nomeVilaoEl.innerText = vilao.nome;
+            if (imgVilaoEl) imgVilaoEl.src = "images/vilao-teste/Arakh.png";
+
+            atualizarVilao();
+
+            // === MÚSICA DO BOSS ===
+            const musicaBoss = document.getElementById("boss-music");
+
+            if (musicaBoss) {
+                musicaBoss.volume = 0.6;
+
+                // toca após primeira interação (evita bloqueio do navegador)
+                document.addEventListener("click", () => {
+                    if (musicaBoss.paused) {
+                        musicaBoss.play().catch(() => { });
+                    }
+                }, { once: true });
+            }
+        }
+
+
+
+        if (atkBtn && crtBtn && curaBtn && dadoBtn) {
             atkBtn.onclick = atacar;
             crtBtn.onclick = critico;
             curaBtn.onclick = curar;
             dadoBtn.onclick = rolarDado;
-            vilaoBtn.onclick = gerarVilao;
         }
+
     }
 
     const nomeHeroiUI = document.getElementById("nome-heroi");
@@ -244,7 +317,7 @@ async function carregarListaDeMonstros() {
 async function gerarVilao() {
     if (listaMonstrosApi.length === 0) {
         console.log("Aguardando API ou lista vazia...");
-        alert("Aguarde, carregando monstros da API...");
+        alert("Aguarde um momento, carregando monstros  ...");
         carregarListaDeMonstros();
         return;
     }
@@ -292,7 +365,13 @@ async function gerarVilao() {
             "images/vilao-teste/orc.png",
             "images/vilao-teste/goblin.png",
             "images/vilao-teste/esqueleto.png",
-            "images/vilao-teste/demonio.png"
+            "images/vilao-teste/demonio.png",
+            "images/vilao-teste/bruxa-vila.png",
+            "images/vilao-teste/galand.png",
+            "images/vilao-teste/hidra.png"
+
+
+
         ];
         const imgSorteada = imagensLocais[Math.floor(Math.random() * imagensLocais.length)];
 
@@ -325,6 +404,7 @@ function atualizarHeroi() {
 //atualiza vida do vilao
 function atualizarVilao() {
     if (!vilao) return;
+
     const porcentagem = (vilao.hp / vilao.hpMax) * 100;
     const barra = document.querySelector(".bar-fill-vilao");
     const nomeEl = document.querySelector(".char-name-vilao");
@@ -332,28 +412,84 @@ function atualizarVilao() {
     if (barra) barra.style.width = porcentagem + "%";
     if (nomeEl) nomeEl.innerText = vilao.nome;
 
-    //  MORTE DO VILÃO
-    if (vilao.hp <= 0) {
-        monstrosDerrotados++;
+    //  AURA DO VAZIO (ARAKH) 
+    if (
+        vilao.nome.includes("Arakh") &&
+        !vilao.auraVazioAtiva &&
+        vilao.hp > 0 &&
+        vilao.hp <= vilao.hpMax * 0.5
+    ) {
+        vilao.auraVazioAtiva = true;
+        abrirModal("overlay-arakh");
+    }
 
-        // recompensas por monstro
-        goldGanho += 50;
-        xpGanho += 60;
+    //  MORTE DO VILÃO 
+    if (vilao.hp > 0) return;
 
-        console.log(`Monstros derrotados: ${monstrosDerrotados}`);
-        console.log(`Gold: ${goldGanho} | XP: ${xpGanho}`);
+    //  BOSS FINAL: ARAKH 
+    if (vilao.nome.includes("Arakh")) {
 
-        if (monstrosDerrotados >= 3) {
+        //  MORTE DEFINITIVA (segunda morte)
+        if (vilao.morteFalsa) {
+
+            // 💰 RECOMPENSA DO BOSS
+            const recompensaBossGold = 1000;
+            const recompensaBossXp = 500;
+
+            // atualiza acumuladores (modal)
+            goldGanho += recompensaBossGold;
+            xpGanho += recompensaBossXp;
+
+            // atualiza total (storage)
+            let goldTotal = parseInt(localStorage.getItem("gold")) || 0;
+            goldTotal += recompensaBossGold;
+            localStorage.setItem("gold", goldTotal);
+
             mostrarVitoria();
             return;
         }
 
+
+
+        //  MORTE FALSA (primeira morte)
+        vilao.morteFalsa = true;
+
+        // pausa música do boss
+        const musicaBoss = document.getElementById("boss-music");
+        if (musicaBoss) musicaBoss.pause();
+
         setTimeout(() => {
-            gerarVilao();
-        }, 1500);
+            // revive com 20% da vida
+            vilao.hp = Math.floor(vilao.hpMax * 0.2);
+            atualizarVilao();
+
+            abrirModal("overlay-arakh-revive");
+
+            const voz = document.getElementById("arakh-voz");
+            if (voz) {
+                voz.currentTime = 0;
+                voz.volume = 1;
+                voz.play().catch(() => { });
+            }
+
+        }, 1000);
+
+        return;
     }
 
+    // ===== MONSTROS COMUNS =====
+    monstrosDerrotados++;
+    goldGanho += 50;
+    xpGanho += 60;
 
+    if (monstrosDerrotados >= monstrosParaVencer) {
+        mostrarVitoria();
+        return;
+    }
+
+    setTimeout(() => {
+        gerarVilao();
+    }, 1500);
 }
 
 // rola o dado 
@@ -394,6 +530,11 @@ function atacar() {
 function critico() {
     if (!podeAgir()) return;
 
+    if (vilao?.auraVazioAtiva) {
+        alert("A Aura do Vazio bloqueia ataques críticos!");
+        return;
+    }
+
     if (criticoBloqueado) {
         alert("Ataque crítico só pode ser usado a cada 2 turnos!");
         return;
@@ -401,13 +542,12 @@ function critico() {
 
     const dano = Math.floor(heroi.crt * mult);
     vilao.hp -= dano;
-    if (vilao.hp < 0) vilao.hp = 0;
 
-    criticoBloqueado = true; // trava o crítico
-
+    criticoBloqueado = true;
     atualizarVilao();
     fimTurnoHeroi();
 }
+
 
 
 //botao de cura
@@ -476,9 +616,10 @@ function fimTurnoHeroi() {
     turnoVilao();
 }
 
-// mostra modal de vitória
+// mostra modal de vitória , recompensas e desbloqueio de fase
 function mostrarVitoria() {
 
+    // recompensas
     let goldTotal = parseInt(localStorage.getItem("gold")) || 0;
     let xpTotal = parseInt(localStorage.getItem("xp")) || 0;
     let nivel = parseInt(localStorage.getItem("nivel")) || 1;
@@ -486,47 +627,129 @@ function mostrarVitoria() {
     goldTotal += goldGanho;
     xpTotal += xpGanho;
 
-    // cálculo de nível (100 XP = 1 nível)
     while (xpTotal >= 100) {
         xpTotal -= 100;
         nivel++;
     }
 
-    // salva tudo
     localStorage.setItem("gold", goldTotal);
     localStorage.setItem("xp", xpTotal);
     localStorage.setItem("nivel", nivel);
 
-    // atualiza modal
-    document.querySelector("#overlay-vitoria p").innerText =
-        `Monstros derrotados: ${monstrosDerrotados}`;
+    // desbloqueio de fase
+    const faseAtual = window.location.pathname;
+    let faseLiberada = parseInt(localStorage.getItem("faseLiberada")) || 1;
+
+    if (faseAtual.includes("pageCombate1") && faseLiberada < 2) {
+        localStorage.setItem("faseLiberada", 2);
+    }
+
+    if (faseAtual.includes("pageCombate2") && faseLiberada < 3) {
+        localStorage.setItem("faseLiberada", 3);
+    }
+
+    // modal de vitória
+    const texto = document.querySelector("#overlay-vitoria p");
+    if (texto) {
+        texto.innerText = `Monstros derrotados: ${monstrosDerrotados}`;
+    }
 
     const recompensa = document.querySelector("#recompensa-modal");
-    recompensa.innerHTML = `
-        <div class="dp">
-            <img src="images/elementos/coin.png">
-            <p>+ ${goldGanho}</p>
-        </div>
-        <div class="dp">
-            <img src="images/elementos/xp.png">
-            <p>+ ${xpGanho} XP</p>
-        </div>
-    `;
+    if (recompensa) {
+        recompensa.innerHTML = `
+            <div class="dp">
+                <img src="images/elementos/coin.png">
+                <p>+ ${goldGanho}</p>
+            </div>
+            <div class="dp">
+                <img src="images/elementos/xp.png">
+                <p>+ ${xpGanho} XP</p>
+            </div>
+        `;
+    }
 
     abrirModal("overlay-vitoria");
 }
+
 
 // função para ir para a página inicial
 function irParaInicio() {
     window.location.href = "pageInicial.html";
 }
 
-const gold = parseInt(localStorage.getItem("gold")) || 0;
-const nivel = parseInt(localStorage.getItem("nivel")) || 0;
-// atualiza recompensas no header
-const recompensas = document.querySelectorAll("#recompensas-header p");
 
-if (recompensas.length >= 2) {
-    recompensas[0].innerText = gold;
-    recompensas[1].innerText = `Nível ${nivel}`;
+// lógica de desbloqueio de fases
+document.addEventListener("DOMContentLoaded", () => {
+    const faseLiberada = parseInt(localStorage.getItem("faseLiberada")) || 1;
+
+    for (let i = 1; i <= faseLiberada; i++) {
+        const fase = document.getElementById(`fase-${i}`);
+        if (fase) {
+            fase.classList.remove("a-transparente");
+            fase.style.pointerEvents = "auto";
+        }
+    }
+
+    // bloqueia fases ainda não liberadas
+    for (let i = faseLiberada + 1; i <= 3; i++) {
+        const fase = document.getElementById(`fase-${i}`);
+        if (fase) {
+            fase.style.pointerEvents = "none";
+        }
+    }
+
+    const headerRecompensas = document.getElementById("recompensas-header");
+
+    if (headerRecompensas) {
+        const gold = parseInt(localStorage.getItem("gold")) || 0;
+        const nivel = parseInt(localStorage.getItem("nivel")) || 1;
+
+        const valores = headerRecompensas.querySelectorAll("p");
+
+        if (valores.length >= 2) {
+            valores[0].innerText = gold;
+            valores[1].innerText = `Nível ${nivel}`;
+        }
+    }
+});
+
+
+
+//BOSS FINAL 
+
+const ARAKH = {
+    nome: "Arakh, Asceta do Vazio",
+    hpMax: 100,
+    hp: 100,
+    atk: 280,
+    def: 250,
+    auraVazioAtiva: false,
+    morteFalsa: false
+};
+
+
+
+const imgArakh = document.getElementById("img-arakh");
+
+if (imgArakh) {
+    imgArakh.addEventListener("click", () => {
+        abrirModal("overlay-arakh");
+    });
 }
+
+
+// ===== LIBERA ÁUDIOS APÓS PRIMEIRA INTERAÇÃO =====
+document.addEventListener("click", () => {
+    const musicaBoss = document.getElementById("boss-music");
+    const vozArakh = document.getElementById("arakh-voz");
+
+    if (musicaBoss && musicaBoss.paused) {
+        musicaBoss.volume = 1;
+        musicaBoss.play().catch(() => { });
+    }
+
+    if (vozArakh) {
+        vozArakh.load(); // prepara o áudio
+    }
+}, { once: true });
+

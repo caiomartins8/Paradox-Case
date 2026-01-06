@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
         <div id="display-flex-header">
 
             <div class="character-hud">
-                <h2 class="char-name">Elfo Mago ( Caio )</h2>
+                <h2 id="nome-heroi" class="char-name"></h2>
 
                 <div class="bar-container health-bar">
                     <div class="bar-fill" style="width: 100%;"></div>
@@ -38,7 +38,7 @@
             <img src="images/favicon.png" alt="" id="logo-combate">
 
             <div class="character-hud">
-                <h2 class="char-name-vilao">Rei Orc ( Inimigo )</h2>
+                <h2 class="char-name-vilao"></h2>
 
                 <div class="bar-container health-bar">
                     <div class="bar-fill-vilao" style="width: 100%;"></div>
@@ -53,33 +53,103 @@
     <main>
 
         <section class="sec-dado">
-            <p>(Derrote 3 monstros para avançar)</p>
             <img src="images/elementos/dado.png" alt="">
             <p>O número sorteado foi : </p>
-            <button>Rolar Dado</button>
+            <button id="btn-dado" type="button">Rolar Dado</button>
+
         </section>
 
         <section class="sec-herois">
             <div>
-                <img src="images/herois/elfo.png" alt="">
+                <img id="img-heroi" src="" alt="Herói">
             </div>
 
             <div id="dp-vilao">
-                <img src="images/vilao teste/orc.png" alt="">
-                <button>Gerar Inimigo </button>
+                <img id="img-arakh" src="images/vilao-teste/Arakh.png" alt="Arakh">
             </div>
         </section>
 
         <section class="sec-btn">
-            <button class="btn-atack"> <img src="images/elementos/btn-atack.png" alt=""></button>
-
-            <button class="btn-cura"> <img src="images/elementos/btn-cura.png" alt=""></button>
-
-            <button class="btn-critico"> <img src="images/elementos/btn-critico.png" alt=""></button>
-
+            <button class="btn-atack" type="button">Atacar</button>
+            <button class="btn-cura" type="button">Curar</button>
+            <button class="btn-critico" type="button">Crítico</button>
         </section>
 
+
     </main>
+
+
+    <div id="overlay-vitoria" class="modal-overlay hide">
+
+        <div id="modalwin">
+            <h1>VITÓRIA</h1>
+            <p>monstros derrotados : 3 </p>
+            <h3>RECOMPENSA</h3>
+            <nav id="recompensa-modal">
+                <div class="dp"><img src="images/elementos/coin.png" alt="">
+                    <p>+ 100</p>
+                </div>
+                <div class="dp"> <img src="images/elementos/xp.png" alt="">
+                    <p>+200xp</p>
+                </div>
+            </nav>
+            <button onclick="irParaInicio()">Continuar</button>
+
+        </div>
+
+    </div>
+
+    <div id="overlay-derrota" class="modal-overlay hide">
+
+        <div id="modaldefeat">
+            <h1>DERROTA</h1>
+            <nav>
+                <img src="images/elementos/iconanao.png" alt="">
+            </nav>
+            <p>você foi massacrado !</p>
+            <button onclick="irParaInicio()">Continuar</button>
+        </div>
+
+    </div>
+
+    <div id="overlay-arakh" class="modal-overlay hide">
+        <div id="modal-arakh">
+            <h2>Aura do Vazio</h2>
+            <p>
+                A vida de Arakh está baixa !! <br>
+                Agora ele envolveu o campo em energia do vazio.
+                <br><br>
+                • Ataques críticos são selados
+
+            </p>
+            <button onclick="fecharModal('overlay-arakh')">Voltar a Batalha !</button>
+        </div>
+    </div>
+
+
+    <div id="overlay-arakh-revive" class="modal-overlay hide">
+        <div id="modal-arakh-revive">
+            <h2>EU VOLTEI !</h2>
+            <p>
+                Pensou que eu tinha morrido, seu verme? <br>
+                O vazio ainda me sustenta ... <br>
+                <br>
+                Eu voltei para o meu <br>
+
+                golpe final. <br>
+                HAHAHAHAHAHA! <br>
+            </p>
+            <button onclick="fecharModal('overlay-arakh-revive')">
+                Encarar o destino
+            </button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <audio id="boss-music" src="sounds/boss-arakh.mp3" loop></audio>
+    <audio id="arakh-voz" src="sounds/arakh-revive.mp3"></audio>
+
 
 </body>
 
