@@ -68,7 +68,6 @@ figure {
 
 #body-inicial {
     background-image: url('images/background/back1.png');
-    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 
@@ -260,7 +259,6 @@ dialog input {
 }
 
 #main-heroi {
-    height: 90vh;
     width: 100%;
     text-align: center;
     font-family: 'IM Fell English';
@@ -268,7 +266,7 @@ dialog input {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10vh;
+    margin-top: 7vh;
 }
 
 #main-heroi article {
@@ -280,7 +278,8 @@ dialog input {
 }
 
 #main-heroi img {
-    width: 250px;
+    width: 180px;
+    height: 190px;
 }
 
 #main-heroi h1 {
@@ -494,7 +493,7 @@ strong {
 }
 
 header {
-    padding: 7px;
+    padding: 7px 0px 0px 7px;
 }
 
 .sec-dado {
@@ -510,6 +509,7 @@ header {
 
 .sec-dado img {
     width: 100px;
+    display: flex;
 }
 
 .sec-dado button {
@@ -765,7 +765,7 @@ h3 {
 #overlay-arakh {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(0,0,0,0.85), #000);
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.85), #000);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -790,7 +790,7 @@ h3 {
 #modal-arakh h2 {
     color: #1aff6a;
     margin-bottom: 16px;
-    text-shadow: 0 0 10px rgba(26,255,106,0.6);
+    text-shadow: 0 0 10px rgba(26, 255, 106, 0.6);
 }
 
 /* Texto */
@@ -884,3 +884,278 @@ h3 {
     box-shadow: 0 0 20px rgba(26, 255, 140, 0.8);
 }
 
+#body-herois {
+    height: 100vh;
+}
+
+.img-herois {
+    width: auto !important;
+    height: 190px;
+}
+
+#main-viloes {
+    height: 76vh;
+    position: relative;
+    display: flex;
+    align-items: start;
+
+}
+
+.sec-dado-desktop {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    #logo-header-inicial {
+        width: 120px;
+    }
+
+    .sec-pergaminho {
+        min-height: 400px;
+    }
+
+    #aviso-nome {
+        font-size: 1.2rem;
+    }
+
+    #main-inicial {
+
+        margin-top: 1px;
+    }
+
+    .sec-pergaminho a {
+        font-size: 2rem;
+    }
+
+    .recompensas img {
+        width: 30px;
+    }
+
+    .recompensas p {
+        font-size: 1.2rem;
+    }
+
+    #main-heroi h1 {
+
+        font-size: 2.2rem;
+    }
+
+    #main-heroi img {
+        height: 330px;
+    }
+
+    #main-heroi {
+        margin-top: 1px;
+    }
+
+    #main-heroi a {
+        width: 40%;
+    }
+
+    .nav-vilao {
+        width: 40% !important;
+        font-size: 0.9rem;
+
+    }
+
+    #main-heroi nav ul li {
+        font-size: 1.2rem;
+    }
+
+    dialog p {
+        font-size: 1rem;
+        font-family: 'Im Fell English';
+        margin-top: 20px;
+    }
+
+
+    .img-flutuante {
+        width: 120px;
+        height: 120px;
+    }
+
+    #main-heroi img {
+        width: auto;
+        height: 280px;
+    }
+
+    #main-viloes {
+        height: 100vh;
+
+    }
+
+    #display-flex-header {
+
+        justify-content: space-around;
+
+    }
+
+    .sec-dado p {
+        font-size: 0.9rem;
+    }
+
+    .sec-herois img {
+        width: 380px;
+        height: 320px;
+    }
+
+    .sec-herois {
+        justify-content: space-around;
+        margin-top: 2vh;
+    }
+
+    .sec-dado img {
+        width: 70px;
+    }
+
+    .sec-btn {
+        justify-content: center;
+        gap: 100px;
+    }
+
+    .character-hud {
+        width: 500px;
+    }
+
+    #logo-combate {
+        width: 100px;
+
+    }
+
+    .sec-dado {
+        display: none;
+    }
+
+    .sec-dado-desktop {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        color: white;
+        gap: 10px;
+        font-family: 'Cinzel';
+        font-size: 1.1rem;
+    }
+
+    .sec-dado-desktop img {
+        height: 90px !important;
+        width: 90px !important;
+
+
+    }
+
+    .btn-critico {
+        width: 150px;
+        height: 150px;
+    }
+
+    .btn-critico img {
+        width: 120px;
+    }
+
+    .btn-atack {
+        width: 150px;
+        height: 150px;
+    }
+
+    .btn-atack img {
+        width: 120px;
+    }
+
+    .btn-cura {
+        width: 150px;
+        height: 150px;
+    }
+
+    .btn-cura img {
+        width: 120px;
+    }
+
+    .sec-herois button {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .char-name-vilao,
+    .char-name {
+        font-size: 1.2rem;
+
+    }
+
+    #body-combate {
+        background-image: url('images/background/backpantano-desktop.png');
+    }
+
+    #body-combate2 {
+        background-image: url('images/background/backmasmorra-desktop.png');
+    }
+
+    #body-combate3 {
+        background-image: url('images/background/topodocastelo-desktop.png');
+    }
+
+    #body-combate3 .sec-herois img {
+        width: 340px;
+        height: 320px;
+    }
+
+    #modalwin {
+        height: 30vw;
+        max-width: 800px;
+    }
+
+    #modalwin h1 {
+        font-size: 4rem;
+    }
+
+    #modalwin h3 {
+        font-size: 3rem;
+        -webkit-text-stroke: #7c6a1f 0.01px;
+
+    }
+
+    #modalwin p {
+        font-size: 1rem;
+    }
+
+    #modalwin button {
+        margin-top: 30px;
+        font-size: 1rem;
+    }
+
+    #modaldefeat {
+        height: 35vw;
+        max-width: 800px;
+    }
+
+    #modaldefeat h1 {
+        font-size: 4rem;
+    }
+
+    #modaldefeat nav img {
+        width: 50px;
+    }
+
+    #modaldefeat p {
+        font-size: 1rem;
+
+    }
+
+    #modaldefeat button {
+        margin-top: 40px;
+        font-size: 1rem;
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+}

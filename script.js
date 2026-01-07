@@ -229,7 +229,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const atkBtn = document.querySelector(".btn-atack");
         const crtBtn = document.querySelector(".btn-critico");
         const curaBtn = document.querySelector(".btn-cura");
-        const dadoBtn = document.querySelector("#btn-dado");
+        const dadoBtns = document.querySelectorAll(".btn-dado");
+
+        if (atkBtn && crtBtn && curaBtn && dadoBtns.length) {
+            atkBtn.onclick = atacar;
+            crtBtn.onclick = critico;
+            curaBtn.onclick = curar;
+            dadoBtns.forEach(b => b.addEventListener("click", rolarDado));
+        } 
+        
         const vilaoBtn = document.querySelector("#dp-vilao button");
 
         if (vilaoBtn) {
@@ -269,12 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-        if (atkBtn && crtBtn && curaBtn && dadoBtn) {
-            atkBtn.onclick = atacar;
-            crtBtn.onclick = critico;
-            curaBtn.onclick = curar;
-            dadoBtn.onclick = rolarDado;
-        }
+        
 
     }
 
@@ -509,8 +512,10 @@ function rolarDado() {
 
     dadoRolado = true; // 🔒 trava o dado
 
-    const textoDado = document.querySelector(".sec-dado p:last-of-type");
-    if (textoDado) textoDado.innerText = `O número sorteado foi : ${n}`;
+    const textoMobile = document.querySelector(".sec-dado p:last-of-type");
+    const textoDesktop = document.querySelector(".sec-dado-desktop p:last-of-type");
+    if (textoMobile) textoMobile.innerText = `O número sorteado foi : ${n}`;
+    if (textoDesktop) textoDesktop.innerText = `O número sorteado foi : ${n}`;
 }
 
 //botao de ataque 
@@ -738,7 +743,7 @@ if (imgArakh) {
 }
 
 
-// ===== LIBERA ÁUDIOS APÓS PRIMEIRA INTERAÇÃO =====
+//  LIBERA ÁUDIOS APÓS PRIMEIRA INTERAÇÃO 
 document.addEventListener("click", () => {
     const musicaBoss = document.getElementById("boss-music");
     const vozArakh = document.getElementById("arakh-voz");

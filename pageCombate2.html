@@ -52,21 +52,29 @@
 
     <main>
 
+       <!-- seção mobile -->
         <section class="sec-dado">
-            <p>(Derrote 5 monstros para avançar)</p>
+            <p>(Derrote 3 monstros para avançar)</p>
             <img src="images/elementos/dado.png" alt="">
             <p>O número sorteado foi : </p>
-            <button id="btn-dado" type="button">Rolar Dado</button>
-
+            <button id="btn-dado-mobile" class="btn-dado" type="button">Rolar Dado</button>
         </section>
 
         <section class="sec-herois">
             <div>
-<img id="img-heroi" src="" alt="Herói">
+                <img id="img-heroi" src="" alt="Herói">
             </div>
 
+              <!-- seção desktop -->
+            <section class="sec-dado-desktop">
+                <p>(Derrote 3 monstros para avançar)</p>
+                <img src="images/elementos/dado.png" alt="">
+                <p>O número sorteado foi : </p>
+                <button id="btn-dado-desktop" class="btn-dado" type="button">Rolar Dado</button>
+            </section>
+
             <div id="dp-vilao">
-                <img src="images/vilao-teste/orc.png" alt="">
+                <img src="images/elementos/aviso.png" alt="">
                 <button>Gerar Inimigo </button>
             </div>
         </section>
@@ -82,7 +90,7 @@
     </main>
 
 
- <div id="overlay-vitoria" class="modal-overlay hide">
+    <div id="overlay-vitoria" class="modal-overlay hide">
 
         <div id="modalwin">
             <h1>VITÓRIA</h1>
@@ -96,8 +104,8 @@
                     <p>+200xp</p>
                 </div>
             </nav>
-<button onclick="irParaInicio()">Continuar</button>
-            
+            <button onclick="irParaInicio()">Continuar</button>
+
         </div>
 
     </div>
@@ -110,7 +118,7 @@
                 <img src="images/elementos/iconanao.png" alt="">
             </nav>
             <p>você foi massacrado !</p>
-<button onclick="irParaInicio()">Continuar</button>
+            <button onclick="irParaInicio()">Continuar</button>
         </div>
 
     </div>
