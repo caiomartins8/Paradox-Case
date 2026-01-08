@@ -526,13 +526,7 @@ header {
 .sec-herois {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: row;
-}
-
-.sec-herois img {
-    width: 170px;
-    height: 130px;
 }
 
 #dp-vilao {
@@ -558,8 +552,7 @@ header {
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
-    margin-top: 20px;
-    gap: 10px;
+    margin-top: 5px;
 }
 
 .btn-atack {
@@ -624,7 +617,9 @@ header {
     align-items: center;
     justify-content: center;
     gap: 7px;
-
+    box-sizing: border-box;
+    z-index: 10001;
+    margin-top: 50%;
 }
 
 #modalwin p {
@@ -685,6 +680,10 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: 7px;
+    box-sizing: border-box;
+    z-index: 10001;
+    margin-top: 50%;
+
 }
 
 
@@ -741,11 +740,13 @@ h3 {
 .toast {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
     background-color: #1E1E1E;
     border: 1px solid #7c6a1f;
     color: #fff;
-    padding: 15px 25px;
+    padding: 15px;
     border-radius: 5px;
     font-family: 'Cinzel', serif;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
@@ -753,7 +754,7 @@ h3 {
     opacity: 0;
     transition: opacity 0.5s ease;
     pointer-events: none;
-    /* Para não clicar nele enquanto invisivel */
+    text-align: center;
 }
 
 .toast.show {
@@ -818,15 +819,6 @@ h3 {
     background: #0ecc55;
     transform: scale(1.05);
 }
-
-
-#body-combate3 .sec-herois img {
-    width: 180px;
-    height: 180px;
-}
-
-/*   MODAL RESSURREIÇÃO ARAKH */
-
 
 #overlay-arakh-revive {
     position: fixed;
@@ -904,6 +896,23 @@ h3 {
 .sec-dado-desktop {
     display: none;
 }
+
+#img-arakh {
+    width: 140px;
+    height: 160px;
+}
+
+#img-heroi {
+    width: 230px;
+    height: 160px;
+
+}
+
+#img-aviso {
+    width: 140px;
+    height: 160px;
+}
+
 
 @media (min-width: 769px) {
     #logo-header-inicial {
@@ -995,7 +1004,7 @@ h3 {
     }
 
     .sec-herois img {
-        width: 380px;
+        width: 420px;
         height: 320px;
     }
 
@@ -1095,13 +1104,29 @@ h3 {
     }
 
     #body-combate3 .sec-herois img {
-        width: 340px;
-        height: 320px;
+        width: 380px;
+        height: 360px;
+    }
+
+    #img-vilao {
+        width: 200px !important;
     }
 
     #modalwin {
-        height: 30vw;
+        height: auto;
         max-width: 800px;
+        margin-top: 0;
+
+        /* centralizar no desktop */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10001;
+        background-size: contain;
+        max-height: 90vh; /* garante que não ultrapasse a viewport */
+        padding: 200px;
+
     }
 
     #modalwin h1 {
@@ -1124,38 +1149,81 @@ h3 {
     }
 
     #modaldefeat {
-        height: 35vw;
+        height: auto;
         max-width: 800px;
+        margin-top: 0;
+
+        /* centralizar no desktop */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10001;
+        background-size: contain;
+        max-height: 90vh; /* garante que não ultrapasse a viewport */
+        padding: 200px;
     }
 
     #modaldefeat h1 {
-        font-size: 4rem;
-    }
-
-    #modaldefeat nav img {
-        width: 50px;
-    }
-
-    #modaldefeat p {
-        font-size: 1rem;
-
+               font-size: 3rem;
+        padding: 20px;
     }
 
     #modaldefeat button {
         margin-top: 40px;
-        font-size: 1rem;
-
-
+        font-size: 1.2rem;
 
     }
 
+    #modaldefeat p {
+        font-size: 1rem;
+    }
+
+    #modaldefeat img {
+        width: 50px !important;
+    }
+
+    #img-aviso {
+        width: 280px;
+        height: 280px;
+    }
 
 
+    #img-heroi {
+        width: 330px;
+        height: 300px;
 
+    }
 
+    #modal-arakh p {
+        font-size: 1.2rem;
+    }
 
+    #modal-arakh button {
+        margin-top: 30px;
+        font-size: 0.7rem;
+    }
 
+    #modal-arakh h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
 
+    }
 
+    #modal-arakh-revive h2 {
+        font-size: 2.5rem;
+    }
+
+    #modal-arakh-revive p {
+        font-size: 1rem;
+    }
+
+    #modal-arakh-revive button {
+        font-size: 0.8rem;
+    }
+
+    #modal-arakh-revive {
+        padding: 3em 3rem;
+    }
 
 }

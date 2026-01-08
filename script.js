@@ -318,12 +318,7 @@ async function carregarListaDeMonstros() {
 
 // Função Principal de Gerar Vilão
 async function gerarVilao() {
-    if (listaMonstrosApi.length === 0) {
-        console.log("Aguardando API ou lista vazia...");
-        alert("Aguarde um momento, carregando monstros  ...");
-        carregarListaDeMonstros();
-        return;
-    }
+    
 
     // pega monstro aleátorio da lista 
     const indiceSorteado = Math.floor(Math.random() * listaMonstrosApi.length);
