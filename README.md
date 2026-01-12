@@ -127,17 +127,6 @@ Mensagens amigáveis ao usuário em caso de falha
 ## 🎮Organização de Arquivos
 
 
-Paradox-Case/
-├── images/           # Imagens e cenários
-├── sounds/           # Efeitos sonoros
-├── index.html        # Tela inicial
-├── pageHerois.html   # Seleção de heróis
-├── pageMissoes.html  # Seleção de fases
-├── pageCombate1.html # Combate – Fase 1
-├── pageCombate2.html # Combate – Fase 2
-├── pageCombate3.html # Combate – Boss final
-├── style.css         # Estilos globais
-├── script.js         # Lógica principal do jogo
-└── README.md         # Documentação do projeto
+![alt text](image.png)
 
 -------------
