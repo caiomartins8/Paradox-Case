@@ -125,6 +125,10 @@ let criticoBloqueado = false;  // bloqueia crítico se usado
 let goldGanho = 0;
 let xpGanho = 0;
 let monstrosParaVencer = 3; // padrão
+let manaAtual = 0; // 0, 50 ou 100
+let resultadoDado = null; // guarda o valor real do D20
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -221,6 +225,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (HEROIS[nomeHeroi]) { // Só roda se tiver herói válido (página de missão)
         heroi = structuredClone(HEROIS[nomeHeroi]);
 
+        manaAtual = 0;
+atualizarMana();
+
+
         // Verifica se os elementos de combate existem antes de atualizar
         if (document.querySelector(".bar-fill")) {
             atualizarHeroi();
@@ -236,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
             crtBtn.onclick = critico;
             curaBtn.onclick = curar;
             dadoBtns.forEach(b => b.addEventListener("click", rolarDado));
-        } 
-        
+        }
+
         const vilaoBtn = document.querySelector("#dp-vilao button");
 
         if (vilaoBtn) {
@@ -277,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-        
+
 
     }
 
@@ -318,7 +326,7 @@ async function carregarListaDeMonstros() {
 
 // Função Principal de Gerar Vilão
 async function gerarVilao() {
-    
+
 
     // pega monstro aleátorio da lista 
     const indiceSorteado = Math.floor(Math.random() * listaMonstrosApi.length);
@@ -388,15 +396,28 @@ async function gerarVilao() {
     }
 }
 
+function calcularDano(base) {
+    const variacao = Math.random() * 0.4 + 0.8; // 80% a 120%
+    return Math.floor(base * variacao);
+}
+
+
 //GAMEPLAY E COMBATE
 
 //atualiza vida do heroi 
 function atualizarHeroi() {
     if (!heroi) return;
+
+    heroi.hp = Math.floor(heroi.hp); // 🔒 garante inteiro
+
     const porcentagem = (heroi.hp / heroi.hpMax) * 100;
     const barra = document.querySelector(".bar-fill");
+    const hpDisplay = document.getElementById("hp-heroi");
+
     if (barra) barra.style.width = porcentagem + "%";
+    if (hpDisplay) hpDisplay.innerText = `${heroi.hp}/${heroi.hpMax}`;
 }
+
 
 
 //atualiza vida do vilao
@@ -406,9 +427,11 @@ function atualizarVilao() {
     const porcentagem = (vilao.hp / vilao.hpMax) * 100;
     const barra = document.querySelector(".bar-fill-vilao");
     const nomeEl = document.querySelector(".char-name-vilao");
+    const hpDisplay = document.getElementById("hp-vilao");
 
     if (barra) barra.style.width = porcentagem + "%";
     if (nomeEl) nomeEl.innerText = vilao.nome;
+    if (hpDisplay) hpDisplay.innerText = `${vilao.hp}/${vilao.hpMax}`;
 
     //  AURA DO VAZIO (ARAKH) 
     if (
@@ -499,27 +522,90 @@ function rolarDado() {
         return;
     }
 
-    const n = Math.floor(Math.random() * 20) + 1;
+    const textoDesktop = document.getElementById("resultado-dado-desktop");
+    const textoMobile = document.getElementById("resultado-dado-mobile");
 
-    if (n <= 7) mult = 1.1;
-    else if (n <= 17) mult = 1.15;
-    else mult = 1.35;
+    let contador = 0;
 
-    dadoRolado = true; // 🔒 trava o dado
+    // efeito de rolagem
+    const animacao = setInterval(() => {
+        const numeroFake = Math.floor(Math.random() * 20) + 1;
 
-    const textoMobile = document.querySelector(".sec-dado p:last-of-type");
-    const textoDesktop = document.querySelector(".sec-dado-desktop p:last-of-type");
-    if (textoMobile) textoMobile.innerText = `O número sorteado foi : ${n}`;
-    if (textoDesktop) textoDesktop.innerText = `O número sorteado foi : ${n}`;
+        if (textoDesktop) {
+            textoDesktop.innerText = `O número sorteado foi : ${numeroFake}`;
+            textoDesktop.classList.add("rodando");
+        }
+
+        if (textoMobile) {
+            textoMobile.innerText = `O número sorteado foi : ${numeroFake}`;
+            textoMobile.classList.add("rodando");
+        }
+
+        contador++;
+    }, 80); // velocidade da rolagem
+
+    // para a animação e define o número real
+    setTimeout(() => {
+        clearInterval(animacao);
+
+        const n = Math.floor(Math.random() * 20) + 1;
+
+       resultadoDado = n;   //  valor real do D20
+dadoRolado = true;
+
+
+        dadoRolado = true;
+
+        if (textoDesktop) {
+            textoDesktop.innerText = `O número sorteado foi : ${n}`;
+            textoDesktop.classList.remove("rodando");
+        }
+
+        if (textoMobile) {
+            textoMobile.innerText = `O número sorteado foi : ${n}`;
+            textoMobile.classList.remove("rodando");
+        }
+
+    }, 1200); // tempo total da animação
 }
+
+
+
+
 
 //botao de ataque 
 function atacar() {
     if (!podeAgir()) return;
 
-    const dano = Math.floor(heroi.atk * mult);
-    vilao.hp -= dano;
+    // ❌ ERRO
+    if (resultadoDado <= 5) {
+        alert("❌ Você errou o ataque!");
+        fimTurnoHeroi();
+        return;
+    }
+
+    let dano;
+
+    // ☠️ CRÍTICO NATURAL
+    if (resultadoDado === 20) {
+        dano = calcularDano(heroi.atk) * 2;
+        alert("☠️ CRÍTICO NATURAL!");
+    }
+    // 💥 ACERTO FORTE
+    else if (resultadoDado >= 15) {
+        dano = calcularDano(heroi.atk) * 1.4;
+    }
+    // ⚔️ ACERTO NORMAL
+    else {
+        dano = calcularDano(heroi.atk);
+    }
+
+    vilao.hp -= Math.floor(dano);
     if (vilao.hp < 0) vilao.hp = 0;
+
+    manaAtual += 50;
+    if (manaAtual > 100) manaAtual = 100;
+    atualizarMana();
 
     atualizarVilao();
     fimTurnoHeroi();
@@ -535,18 +621,30 @@ function critico() {
         return;
     }
 
-    if (criticoBloqueado) {
-        alert("Ataque crítico só pode ser usado a cada 2 turnos!");
+    if (manaAtual < 100) {
+        alert("Mana insuficiente!");
         return;
     }
 
-    const dano = Math.floor(heroi.crt * mult);
-    vilao.hp -= dano;
+    // chance de falhar
+    if (resultadoDado <= 8) {
+        alert("❌ O ataque crítico falhou!");
+        manaAtual = 0;
+        atualizarMana();
+        fimTurnoHeroi();
+        return;
+    }
 
-    criticoBloqueado = true;
+    const dano = calcularDano(heroi.crt) * 1.8;
+    vilao.hp -= Math.floor(dano);
+
+    manaAtual = 0;
+    atualizarMana();
+
     atualizarVilao();
     fimTurnoHeroi();
 }
+
 
 
 
@@ -558,31 +656,53 @@ function curar() {
     heroi.hp += cura;
     if (heroi.hp > heroi.hpMax) heroi.hp = heroi.hpMax;
 
+    manaAtual += 50;
+if (manaAtual > 100) manaAtual = 100;
+atualizarMana();
+
     atualizarHeroi();
     fimTurnoHeroi();
 }
 
 
 // turno do vilão de ataque
+// turno do vilão de ataque
 function turnoVilao() {
     turno = "vilao";
 
     setTimeout(() => {
-        if (vilao && vilao.hp > 0) {
-            heroi.hp -= Math.max(50, vilao.atk - heroi.def * 0.3);
-            if (heroi.hp < 0) heroi.hp = 0;
+        const dadoVilao = Math.floor(Math.random() * 20) + 1;
 
-            atualizarHeroi();
+        let danoVilao = calcularDano(vilao.atk);
 
-            if (heroi.hp <= 0) {
-                abrirModal("overlay-derrota");
-                return;
-            }
+        // ☠️ crítico do vilão
+        if (dadoVilao >= 18) {
+            danoVilao *= 1.5;
         }
 
+        // aplica defesa do herói
+        heroi.hp -= Math.max(30, danoVilao - heroi.def * 0.2);
+
+        // 🔒 garante que HP não fique negativo
+        if (heroi.hp < 0) heroi.hp = 0;
+
+        // 🔄 atualiza a interface
+        atualizarHeroi();
+
+        // ⚔️ verifica se o herói morreu
+        if (heroi.hp <= 0) {
+            mostrarDerrota(); // derrota do player
+            return;
+        }
+
+        // volta o turno
         turno = "heroi";
+        dadoRolado = false;
+        resultadoDado = null;
+
     }, 1200);
 }
+
 
 //verifica se pode agir
 function podeAgir() {
@@ -614,6 +734,14 @@ function fimTurnoHeroi() {
     }
 
     turnoVilao();
+}
+
+// mostra modal de derrota
+function mostrarDerrota() {
+    const overlay = document.getElementById("overlay-derrota");
+    if (overlay) {
+        overlay.classList.remove("hide");
+    }
 }
 
 // mostra modal de vitória , recompensas e desbloqueio de fase
@@ -753,3 +881,23 @@ document.addEventListener("click", () => {
     }
 }, { once: true });
 
+
+//atualizacao de mana 
+function atualizarMana() {
+    const manaBar = document.getElementById("mana-fill");
+    const btnCritico = document.querySelector(".btn-critico");
+
+    if (manaBar) {
+        manaBar.style.width = manaAtual + "%";
+    }
+
+    if (manaAtual >= 100) {
+        btnCritico.classList.remove("bloqueado");
+        btnCritico.classList.add("pronto");
+        criticoBloqueado = false;
+    } else {
+        btnCritico.classList.add("bloqueado");
+        btnCritico.classList.remove("pronto");
+        criticoBloqueado = true;
+    }
+}

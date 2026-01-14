@@ -28,11 +28,13 @@
 
                 <div class="bar-container health-bar">
                     <div class="bar-fill" style="width: 100%;"></div>
+                    <span class="hp-display" id="hp-heroi">100/100</span>
                 </div>
 
                 <div class="bar-container mana-bar">
-                    <div class="bar-fill" style="width: 100%;"></div>
+                    <div class="bar-fill" id="mana-fill" style="width: 0%;"></div>
                 </div>
+
             </div>
 
             <img src="images/favicon.png" alt="" id="logo-combate">
@@ -42,6 +44,7 @@
 
                 <div class="bar-container health-bar">
                     <div class="bar-fill-vilao" style="width: 100%;"></div>
+                    <span class="hp-display" id="hp-vilao">100/100</span>
                 </div>
 
             </div>
@@ -55,30 +58,32 @@
         <!-- seção mobile -->
         <section class="sec-dado">
             <img src="images/elementos/dado.png" alt="">
-            <p>O número sorteado foi : </p>
+            <p id="resultado-dado-mobile">O número sorteado foi : </p>
             <button id="btn-dado-mobile" class="btn-dado" type="button">Rolar Dado</button>
         </section>
 
         <section class="sec-herois">
             <div>
-                <img  src="" alt="Herói" id="img-heroi">
+                <img src="" alt="Herói" id="img-heroi">
             </div>
             <!-- seção desktop -->
             <section class="sec-dado-desktop">
                 <img src="images/elementos/dado.png" alt="">
-                <p>O número sorteado foi : </p>
+                <p id="resultado-dado-desktop">O número sorteado foi : </p>
                 <button id="btn-dado-desktop" class="btn-dado" type="button">Rolar Dado</button>
             </section>
             <div id="dp-vilao">
-                <img  src="images/vilao-teste/Arakh.png" alt="Arakh" id="img-arakh">
+                <img src="images/vilao-teste/Arakh.png" alt="Arakh" id="img-arakh">
             </div>
         </section>
 
         <section class="sec-btn">
             <button class="btn-atack" type="button"><img src="images/elementos/btn-atack.png" alt=""></button>
             <button class="btn-cura" type="button"><img src="images/elementos/btn-cura.png" alt=""></button>
-            <button class="btn-critico" type="button"><img src="images/elementos/btn-critico.png" alt=""></button>
-
+            <button class="btn-critico bloqueado" type="button">
+                <img src="images/elementos/btn-critico.png" alt="">
+                <span class="cadeado">🔒</span>
+            </button>
 
         </section>
 

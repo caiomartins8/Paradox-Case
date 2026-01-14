@@ -446,6 +446,20 @@ strong {
     box-sizing: border-box;
 }
 
+.hp-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: bold;
+    font-family: 'Cinzel';
+    z-index: 10;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+}
+
 .bar-fill {
     height: 100%;
     border-radius: 15px;
@@ -521,6 +535,13 @@ header {
     margin-top: 15px;
     border: none;
     border-radius: 4px;
+}
+
+#resultado-dado {
+    color: white;
+    font-family: 'Cinzel';
+    font-size: 0.8rem;
+    text-align: center;
 }
 
 .sec-herois {
@@ -913,6 +934,45 @@ h3 {
     height: 160px;
 }
 
+.rodando {
+    animation: piscar 0.1s infinite;
+}
+
+@keyframes piscar {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+.btn-critico {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.btn-critico.bloqueado {
+    filter: brightness(0.4);
+    pointer-events: none;
+}
+
+.btn-critico .cadeado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+}
+
+.btn-critico.pronto {
+    filter: brightness(1.2);
+    box-shadow: 0 0 15px #ff5500, 0 0 30px #ff5500;
+    pointer-events: auto;
+}
+
+.btn-critico.pronto .cadeado {
+    display: none;
+}
+
+
 
 @media (min-width: 769px) {
     #logo-header-inicial {
@@ -1226,4 +1286,7 @@ h3 {
         padding: 3em 3rem;
     }
 
+    #resultado-dado{
+        display: flex;
+    }
 }
