@@ -514,6 +514,8 @@ function atualizarVilao() {
 }
 
 // rola o dado 
+
+// rola o dado (com roleta visual)
 function rolarDado() {
     if (turno !== "heroi") return;
 
@@ -525,24 +527,21 @@ function rolarDado() {
     const textoDesktop = document.getElementById("resultado-dado-desktop");
     const textoMobile = document.getElementById("resultado-dado-mobile");
 
+    // NOVO: roletas visuais
+    const roletaDesktop = document.getElementById("roleta-desktop");
+    const roletaMobile = document.getElementById("roleta-mobile");
+
     let contador = 0;
 
-    // efeito de rolagem
+    // animação da roleta
     const animacao = setInterval(() => {
         const numeroFake = Math.floor(Math.random() * 20) + 1;
 
-        if (textoDesktop) {
-            textoDesktop.innerText = `O número sorteado foi : ${numeroFake}`;
-            textoDesktop.classList.add("rodando");
-        }
-
-        if (textoMobile) {
-            textoMobile.innerText = `O número sorteado foi : ${numeroFake}`;
-            textoMobile.classList.add("rodando");
-        }
+        if (roletaDesktop) roletaDesktop.textContent = numeroFake;
+        if (roletaMobile) roletaMobile.textContent = numeroFake;
 
         contador++;
-    }, 80); // velocidade da rolagem
+    }, 80);
 
     // para a animação e define o número real
     setTimeout(() => {
@@ -550,26 +549,22 @@ function rolarDado() {
 
         const n = Math.floor(Math.random() * 20) + 1;
 
-       resultadoDado = n;   //  valor real do D20
-dadoRolado = true;
-
-
+        resultadoDado = n;   // valor real do D20
         dadoRolado = true;
 
+        if (roletaDesktop) roletaDesktop.textContent = n;
+        if (roletaMobile) roletaMobile.textContent = n;
+
         if (textoDesktop) {
-            textoDesktop.innerText = `O número sorteado foi : ${n}`;
-            textoDesktop.classList.remove("rodando");
+            textoDesktop.innerText = `O número sorteado foi :`;
         }
 
         if (textoMobile) {
-            textoMobile.innerText = `O número sorteado foi : ${n}`;
-            textoMobile.classList.remove("rodando");
+            textoMobile.innerText = `O número sorteado foi : `;
         }
 
-    }, 1200); // tempo total da animação
+    }, 1200);
 }
-
-
 
 
 

@@ -70,6 +70,8 @@ figure {
     background-image: url('images/background/back1.png');
     background-position: center;
     background-size: cover;
+    height: 100vh;
+    overflow: hidden;
 
 }
 
@@ -78,13 +80,15 @@ figure {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    height: 100vh;
+    overflow: hidden;
 
 }
 
 #main-inicial {
     height: 100vh;
     width: 100%;
-    margin-top: 40px;
+    padding-top: 40px;
 }
 
 dialog {
@@ -289,10 +293,8 @@ dialog input {
 }
 
 #main-heroi nav {
-    width: 95%;
     background: linear-gradient(to right, #bc4e0e, #c75d16);
-    padding: 10px;
-
+    padding: 6px;
 }
 
 #main-heroi nav ul {
@@ -301,6 +303,15 @@ dialog input {
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+#main-heroi nav ul li {
+    border-right: 1px solid #000000;
+    padding: 0 10px;
+}
+
+#main-heroi nav ul li:last-child {
+    border-right: none;
 }
 
 #main-heroi button {
@@ -972,6 +983,22 @@ h3 {
     display: none;
 }
 
+.roleta-dado {
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    color: #ffd700;
+    font-size: 4.5rem;
+    font-family: 'Cinzel', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    margin: 10px auto;
+    user-select: none;
+}
+
 
 
 @media (min-width: 769px) {
@@ -1289,4 +1316,10 @@ h3 {
     #resultado-dado{
         display: flex;
     }
+
+    #main-heroi nav {
+    padding: 17px;
+    width: 100%;
+}
+
 }
