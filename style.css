@@ -984,12 +984,11 @@ h3 {
 }
 
 .roleta-dado {
-    width: 140px;
-    height: 140px;
+    width: 90px;
     border-radius: 20px;
     background: radial-gradient(circle, #1a1a1a, #000);
     color: #ffd700;
-    font-size: 4.5rem;
+    font-size: 4rem;
     font-family: 'Cinzel', serif;
     display: flex;
     align-items: center;
@@ -1321,5 +1320,22 @@ h3 {
     padding: 17px;
     width: 100%;
 }
+
+.roleta-dado {
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    color: #ffd700;
+    font-size: 4.5rem;
+    font-family: 'Cinzel', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    margin: 10px auto;
+    user-select: none;
+}
+
 
 }
