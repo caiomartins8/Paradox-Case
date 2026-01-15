@@ -408,7 +408,7 @@ function calcularDano(base) {
 function atualizarHeroi() {
     if (!heroi) return;
 
-    heroi.hp = Math.floor(heroi.hp); // 🔒 garante inteiro
+    heroi.hp = Math.floor(heroi.hp); // garante inteiro
 
     const porcentagem = (heroi.hp / heroi.hpMax) * 100;
     const barra = document.querySelector(".bar-fill");
@@ -453,7 +453,7 @@ function atualizarVilao() {
         //  MORTE DEFINITIVA (segunda morte)
         if (vilao.morteFalsa) {
 
-            // 💰 RECOMPENSA DO BOSS
+            // RECOMPENSA DO BOSS
             const recompensaBossGold = 1000;
             const recompensaBossXp = 500;
 
@@ -577,7 +577,7 @@ dadoRolado = true;
 function atacar() {
     if (!podeAgir()) return;
 
-    // ❌ ERRO
+    // ERRO
     if (resultadoDado <= 5) {
         alert("❌ Você errou o ataque!");
         fimTurnoHeroi();
@@ -586,16 +586,16 @@ function atacar() {
 
     let dano;
 
-    // ☠️ CRÍTICO NATURAL
+    //  CRÍTICO NATURAL
     if (resultadoDado === 20) {
         dano = calcularDano(heroi.atk) * 2;
         alert("☠️ CRÍTICO NATURAL!");
     }
-    // 💥 ACERTO FORTE
+    //  ACERTO FORTE
     else if (resultadoDado >= 15) {
         dano = calcularDano(heroi.atk) * 1.4;
     }
-    // ⚔️ ACERTO NORMAL
+    //  ACERTO NORMAL
     else {
         dano = calcularDano(heroi.atk);
     }
@@ -675,7 +675,7 @@ function turnoVilao() {
 
         let danoVilao = calcularDano(vilao.atk);
 
-        // ☠️ crítico do vilão
+        //  crítico do vilão
         if (dadoVilao >= 18) {
             danoVilao *= 1.5;
         }
@@ -683,13 +683,13 @@ function turnoVilao() {
         // aplica defesa do herói
         heroi.hp -= Math.max(30, danoVilao - heroi.def * 0.2);
 
-        // 🔒 garante que HP não fique negativo
+        //  garante que HP não fique negativo
         if (heroi.hp < 0) heroi.hp = 0;
 
-        // 🔄 atualiza a interface
+        //  atualiza a interface
         atualizarHeroi();
 
-        // ⚔️ verifica se o herói morreu
+        //  verifica se o herói morreu
         if (heroi.hp <= 0) {
             mostrarDerrota(); // derrota do player
             return;
