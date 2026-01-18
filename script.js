@@ -1,35 +1,53 @@
-// função de carregamento da página
+//  01 - CARREGAR PÁGINA
+
 function iniciarCarregamento() {
     const barra = document.querySelector(".loader-bar");
     if (barra) {
-        console.log("Página de Carregamento detectada.");
         let largura = 0;
         const tempo = setInterval(frame, 30);
+        // o 30 representa que a funcao é executada a cada 30 milissegundos sendo assim cada vez a barra enche 1 ate ser preenchida 
 
         function frame() {
             if (largura >= 100) {
                 clearInterval(tempo);
                 window.location.href = "pageInicial.html";
+                //quando a barra chega no 100 o clear para a contagem e direciona para a pagina inciial
+
             } else {
+
+                // enquanto a largura for menor que 100%, o else aumenta o valor e atualiza a barra
                 largura++;
                 barra.style.width = largura + '%';
             }
         }
     }
 }
+
 iniciarCarregamento()
 
-// função de abrir e fechar mdoal
+
+
+
+
+// 02 - ABRIR MODAL
+
 function abrirModal(idModal) {
     const modal = document.getElementById(idModal);
+    // o modal esta escondido , entao e verificado e se ele existe a classe hide e removida e ele aparece na tela
+
     if (modal) {
         modal.classList.remove('hide');
     }
 }
 
-// fechar modal 
+
+
+
+// 03 - FECHAR MODAL
+
 function fecharModal(idModal) {
     const modal = document.getElementById(idModal);
+    // o modal esta escondido , entao e verificado e se ele existe a classe hide e removida e ele aparece na tela
     if (modal) modal.classList.add("hide");
 
     // quando fecha o modal da ressurreição
@@ -40,26 +58,35 @@ function fecharModal(idModal) {
         if (musicaBoss) {
             musicaBoss.currentTime = 0;
             musicaBoss.play().catch(() => { });
+            // da play na musica e o  .catch() evita erro caso o navegador bloqueie o audio
         }
 
         // Arakh ataca primeiro
         setTimeout(() => {
             turnoVilao();
-        }, 800);
+        }, 800); //cria um atrasado de 0,8 sgeundos para o ataque do arakh
     }
 }
 
 
-// função de selecionar herói (salva e redireciona)
+
+
+// 04 - SELECIONAR HERÓI
+
 function selecionarHeroi(nome, imagem) {
     localStorage.setItem("heroiSelecionado", nome);
     localStorage.setItem("heroiImagem", imagem);
     localStorage.setItem("exibirToast", "true");
+    // salva os dados do heroi , imagem e salva para o toast de aviso de heroi escolhido e em seguida é redirecionado a tela inicial
 
     window.location.href = "pageInicial.html";
 }
 
-// lógica carrossel de herói 
+
+
+
+// 05 - MUDAR HERÓI DO CARROSEL
+
 
 let indiceAtual = 0;
 
@@ -67,19 +94,23 @@ function mudarHeroi(direcao) {
     const herois = document.querySelectorAll(".heroi-card");
     if (!herois.length) return;
 
-    herois.forEach(h => h.style.display = "none");
+    herois.forEach(h => h.style.display = "none"); //esconde todos os herois
 
-    indiceAtual += direcao;
+    indiceAtual += direcao; //soma e subtrai o indice (vai pra frente e para tras)
 
-    if (indiceAtual >= herois.length) indiceAtual = 0;
-    if (indiceAtual < 0) indiceAtual = herois.length - 1;
+    if (indiceAtual >= herois.length) indiceAtual = 0; // se passar do ultimo volta para o primeiro
+    if (indiceAtual < 0) indiceAtual = herois.length - 1; // se voltar do primeiro vai para o utlimo
 
     herois[indiceAtual].style.display = "flex";
 }
 
-//função para ver se a pessoa esoclheu um héroi antes de netrar na missão
+
+
+
+// 06 - VERIFICA SE A PESSOA TEM UM HERÓI SELECIONADO ANTES DE ENTRAR EM MISSÕES 
+
 function verificarMissao(event) {
-    event.preventDefault();
+    event.preventDefault(); // bloqueia a ação padrao e deixa que o javascript controle
 
     const heroiSelecionado = localStorage.getItem('heroiSelecionado');
     const toastBox = document.getElementById('toast-box');
@@ -87,27 +118,31 @@ function verificarMissao(event) {
 
     if (!heroiSelecionado) {
         if (toastMsg) {
-            toastMsg.innerText = "Nenhum herói selecionado!";
+            toastMsg.innerText = "Nenhum herói selecionado!"; //caso tente entrar sem ter um herói aparece um toast de aviso 
         }
         if (toastBox) {
-            toastBox.classList.remove('hidden');
+            toastBox.classList.remove('hidden'); // remove a classe que esconde e adiciona a que mostra
             toastBox.classList.add('show');
             setTimeout(() => {
-                toastBox.classList.remove('show');
+                toastBox.classList.remove('show'); // remove a classe que mostra e adiciona a que esconde
                 toastBox.classList.add('hidden');
-            }, 3000);
+            }, 3000); // mostra por 3 segundos 
         }
         return;
     }
-    window.location.href = "pageMissoes.html";
+    window.location.href = "pageMissoes.html"; // permite entrar na pagina de missoes 
 }
 
-//variáveis globais
+
+
+
+// 07 - VARIÁVEL GLOBAL 
 
 let monstrosDerrotados = 0;
 let listaMonstrosApi = []; // lista de monstros da API
 
 const HEROIS = {
+    // os herois jogaveis são objetos que estão dentro do objeto HEROIS
     Eisen: { nome: "Eisen", hpMax: 1250, hp: 1250, atk: 250, crt: 450, cura: 150, def: 350 },
     Sindel: { nome: "Sindel", hpMax: 900, hp: 900, atk: 350, crt: 600, cura: 400, def: 200 },
     Venus: { nome: "Vênus", hpMax: 800, hp: 800, atk: 400, crt: 800, cura: 100, def: 150 }
@@ -131,18 +166,23 @@ let resultadoDado = null; // guarda o valor real do D20
 
 
 
+//08 - DOM CONTENT LOADED
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    if (document.body.classList.contains("page-loading")) {
+    if (document.body.classList.contains("page-loading")) { //espera o HTML carregar e roda o loading só na página certa
         iniciarCarregamento();
     }
 });
 
 
-//d om content loaded
+
+
+//09 - DOM CONTENT LOADED
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    // define número de monstros para vencer conforme a página
+    // define número de monstros para vencer conforme a missao
     const paginaAtual = window.location.pathname;
 
     if (paginaAtual.includes("pageCombate1")) {
@@ -154,23 +194,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     else if (paginaAtual.includes("pageCombate3")) {
-        monstrosParaVencer = 7; // Castelo (exemplo)
+        monstrosParaVencer = 7; // Castelo 
     }
-
-
     carregarListaDeMonstros();
 
-    // carrossel de heróis
+
+
+
+    // exibe o primeiro herói do carrossel ao carregar a página
     const heroisCarrossel = document.querySelectorAll(".heroi-card");
     if (heroisCarrossel.length > 0) {
         heroisCarrossel[0].style.display = "flex";
     }
+
+
+
 
     // modal dom 
     const modalBoasVindas = document.getElementById("modalBoasVindas");
     const btnConfirmar = document.getElementById("btnFechar");
     const inputNome = document.getElementById("inputPegarNome");
     const avisoNomeElemento = document.getElementById("aviso-nome");
+
+
+
 
     // atualizar texto de inicio com nome 
     function atualizarTextoAviso(nome) {
@@ -179,14 +226,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+
+
+
     // modal nome jogador
     if (modalBoasVindas || avisoNomeElemento) {
-        const nomeSalvo = localStorage.getItem("nomeDoJogador");
+        const nomeSalvo = localStorage.getItem("nomeDoJogador");//salva o nome
+
         if (nomeSalvo) {
-            atualizarTextoAviso(nomeSalvo);
-            if (modalBoasVindas) modalBoasVindas.close();
+            atualizarTextoAviso(nomeSalvo); //atualizado texto com nome
+            if (modalBoasVindas) modalBoasVindas.close(); //fecha
         } else {
-            if (modalBoasVindas) modalBoasVindas.showModal();
+            if (modalBoasVindas) modalBoasVindas.showModal(); //caso nao tenha nome ele continua aberto
         }
 
         // confirmar nome jogador
@@ -204,32 +255,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+
+
+
     // toast de heroi escolhido 
     const toastBox = document.getElementById('toast-box');
+
     if (toastBox && localStorage.getItem('exibirToast') === 'true') {
         let heroiNome = localStorage.getItem('heroiSelecionado');
         let msg = document.getElementById('toast-msg');
-        if (msg) msg.innerText = `Herói ${heroiNome} escolhido com sucesso!`;
+        if (msg) msg.innerText = `Herói ${heroiNome} escolhido com sucesso!`; // pega o nome do heroi apos ser escolhido e joga no toast de aviso 
 
-        toastBox.classList.remove('hidden');
+        toastBox.classList.remove('hidden'); // remove a classe hidden e adiciona a show
         toastBox.classList.add('show');
         setTimeout(() => {
-            toastBox.classList.remove('show');
+            toastBox.classList.remove('show');// remove a classe show e adiciona a hidden
             toastBox.classList.add('hidden');
-        }, 3000);
+        }, 3000); // 3 segundos 
         localStorage.removeItem('exibirToast');
     }
 
     // lógica de combate
     const nomeHeroi = localStorage.getItem("heroiSelecionado");
-    if (HEROIS[nomeHeroi]) { // Só roda se tiver herói válido (página de missão)
-        heroi = structuredClone(HEROIS[nomeHeroi]);
+    if (HEROIS[nomeHeroi]) { // so roda se tiver herói válido (página de missão)
+        heroi = structuredClone(HEROIS[nomeHeroi]);// cria uma cópia do herói para uso na batalha pois os dados alterados na batalha alterariam o objeto original
 
         manaAtual = 0;
-atualizarMana();
+        atualizarMana();
 
 
-        // Verifica se os elementos de combate existem antes de atualizar
+        // verifica se os elementos de combate existem antes de atualizar
         if (document.querySelector(".bar-fill")) {
             atualizarHeroi();
         }
@@ -243,7 +298,8 @@ atualizarMana();
             atkBtn.onclick = atacar;
             crtBtn.onclick = critico;
             curaBtn.onclick = curar;
-            dadoBtns.forEach(b => b.addEventListener("click", rolarDado));
+            dadoBtns.forEach(b => b.addEventListener("click", rolarDado)); // adiciona evento de clique em todos os botões de dado
+
         }
 
         const vilaoBtn = document.querySelector("#dp-vilao button");
@@ -251,10 +307,13 @@ atualizarMana();
         if (vilaoBtn) {
             vilaoBtn.onclick = gerarVilao;
         }
-        // gera vilão automaticamente na página de combate
+
+        // gera vilão na página de combate
+
         if (window.location.pathname.includes("pageCombate1") ||
             window.location.pathname.includes("pageCombate2")) {
-            gerarVilao();
+            gerarVilao(); // gera o vilão apenas nas páginas de combate
+
         }
         if (window.location.pathname.includes("pageCombate3")) {
             // === BOSS FINAL ===
@@ -283,11 +342,10 @@ atualizarMana();
             }
         }
 
-
-
-
-
     }
+
+
+
 
     const nomeHeroiUI = document.getElementById("nome-heroi");
     const imgHeroiUI = document.getElementById("img-heroi");
@@ -310,30 +368,40 @@ atualizarMana();
 });
 
 
+
+
 //FETCH
-// Função para buscar a lista de todos os monstros
+// 10 - BUSCAR VILOES DA API
+
 async function carregarListaDeMonstros() {
     try {
-        const resposta = await fetch("https://www.dnd5eapi.co/api/monsters");
-        const dados = await resposta.json();
-        listaMonstrosApi = dados.results;
-        console.log("Lista de monstros carregada via API!", listaMonstrosApi.length, "encontrados.");
+        const resposta = await fetch("https://www.dnd5eapi.co/api/monsters"); //busca viloes da api
+
+        const dados = await resposta.json(); // trasnforma a resposta da api em json
+
+        listaMonstrosApi = dados.results; // salva o monstro em uma variavel
+
+        console.log("Lista de monstros carregada via API!", listaMonstrosApi.length, "encontrados."); //confirmação de sucesso e quantos monstros vieram
     } catch (erro) {
+        //caso de erro ao buscar da api imprime um montro generico como tratamento de erro 
         console.error("Erro ao buscar lista de monstros:", erro);
         listaMonstrosApi = [{ name: "Monstro Genérico", url: null }];
     }
 }
 
-// Função Principal de Gerar Vilão
-async function gerarVilao() {
 
+
+
+// 11- GERAR VILÃO 
+
+async function gerarVilao() {
 
     // pega monstro aleátorio da lista 
     const indiceSorteado = Math.floor(Math.random() * listaMonstrosApi.length);
-    const monstroBasico = listaMonstrosApi[indiceSorteado];
+    const monstroBasico = listaMonstrosApi[indiceSorteado];// ajusta o numero de monstros da lista para a quantidade a ser sorteada e pega um aleatoriamente  
 
     const nomeVilaoEl = document.querySelector(".char-name-vilao");
-    if (nomeVilaoEl) nomeVilaoEl.innerText = "Invocando " + monstroBasico.name + "...";
+    if (nomeVilaoEl) nomeVilaoEl.innerText = "Invocando " + monstroBasico.name + "..."; //carregamneto 
 
     try {
         let statsVilao = {};
@@ -347,6 +415,9 @@ async function gerarVilao() {
             const multiplicadorVida = 15;
             const nivel = detalhes.challenge_rating || 1;
 
+            // define os status do vilão
+
+            //vilao mais forte conforme o jogo avança, mas nunca desbalanceado
             statsVilao = {
                 nome: detalhes.name,
                 hpMax: (detalhes.hit_points || 50) * multiplicadorVida,
@@ -375,10 +446,9 @@ async function gerarVilao() {
             "images/vilao-teste/bruxa-vila.png",
             "images/vilao-teste/galand.png",
             "images/vilao-teste/hidra.png"
-
-
-
         ];
+
+        //gera uma das imagens aleatorias 
         const imgSorteada = imagensLocais[Math.floor(Math.random() * imagensLocais.length)];
 
         const imgEl = document.querySelector("#dp-vilao img");
@@ -396,31 +466,39 @@ async function gerarVilao() {
     }
 }
 
+
+
+
+
+// 12 - CÁLCULO DE DANO
 function calcularDano(base) {
     const variacao = Math.random() * 0.4 + 0.8; // 80% a 120%
     return Math.floor(base * variacao);
 }
 
 
+
 //GAMEPLAY E COMBATE
 
-//atualiza vida do heroi 
+// 13 - ATUALIZAR HEROI
+
 function atualizarHeroi() {
     if (!heroi) return;
 
-    heroi.hp = Math.floor(heroi.hp); // garante inteiro
+    heroi.hp = Math.floor(heroi.hp); // garante hp em numero inteiro
 
     const porcentagem = (heroi.hp / heroi.hpMax) * 100;
     const barra = document.querySelector(".bar-fill");
     const hpDisplay = document.getElementById("hp-heroi");
 
     if (barra) barra.style.width = porcentagem + "%";
-    if (hpDisplay) hpDisplay.innerText = `${heroi.hp}/${heroi.hpMax}`;
+    if (hpDisplay) hpDisplay.innerText = `${heroi.hp}/${heroi.hpMax}`; //imprime a vida atual e a vida maxima na barra de vida
 }
 
 
 
-//atualiza vida do vilao
+// 14 - ATUALIZAR VILAO
+
 function atualizarVilao() {
     if (!vilao) return;
 
@@ -443,6 +521,11 @@ function atualizarVilao() {
         vilao.auraVazioAtiva = true;
         abrirModal("overlay-arakh");
     }
+
+    // verifica se e o arakh e se chegou a segunda fase da batalha
+    // quando a vida cai 50% a aura do vazio ativa 
+    // e exibe um modal visual para marcar a mudança de fase do boss.
+
 
     //  MORTE DO VILÃO 
     if (vilao.hp > 0) return;
@@ -487,18 +570,19 @@ function atualizarVilao() {
             abrirModal("overlay-arakh-revive");
 
             const voz = document.getElementById("arakh-voz");
-            if (voz) {
+            if (voz) {  // reproduz a voz do boss Arakh garantindo que o áudio comece do início e evitando erros caso o áudio não exista.
+
                 voz.currentTime = 0;
                 voz.volume = 1;
                 voz.play().catch(() => { });
             }
 
-        }, 1000);
+        }, 1000);//espera um segundo 
 
         return;
     }
 
-    // ===== MONSTROS COMUNS =====
+    // MONSTROS COMUNS
     monstrosDerrotados++;
     goldGanho += 50;
     xpGanho += 60;
@@ -513,9 +597,10 @@ function atualizarVilao() {
     }, 1500);
 }
 
-// rola o dado 
 
-// rola o dado (com roleta visual)
+
+
+// 15 - ROLAR DADO
 function rolarDado() {
     if (turno !== "heroi") return;
 
@@ -527,7 +612,7 @@ function rolarDado() {
     const textoDesktop = document.getElementById("resultado-dado-desktop");
     const textoMobile = document.getElementById("resultado-dado-mobile");
 
-    // NOVO: roletas visuais
+    // roletas visuais
     const roletaDesktop = document.getElementById("roleta-desktop");
     const roletaMobile = document.getElementById("roleta-mobile");
 
@@ -568,46 +653,49 @@ function rolarDado() {
 
 
 
-//botao de ataque 
-function atacar() {
-    if (!podeAgir()) return;
 
-    // ERRO
-    if (resultadoDado <= 5) {
-        alert("❌ Você errou o ataque!");
-        fimTurnoHeroi();
-        return;
-    }
+// 16 - BOTÃO DE ATAQUE 
 
-    let dano;
+if (!podeAgir()) return;
 
-    //  CRÍTICO NATURAL
-    if (resultadoDado === 20) {
-        dano = calcularDano(heroi.atk) * 2;
-        alert("☠️ CRÍTICO NATURAL!");
-    }
-    //  ACERTO FORTE
-    else if (resultadoDado >= 15) {
-        dano = calcularDano(heroi.atk) * 1.4;
-    }
-    //  ACERTO NORMAL
-    else {
-        dano = calcularDano(heroi.atk);
-    }
-
-    vilao.hp -= Math.floor(dano);
-    if (vilao.hp < 0) vilao.hp = 0;
-
-    manaAtual += 50;
-    if (manaAtual > 100) manaAtual = 100;
-    atualizarMana();
-
-    atualizarVilao();
+// ERRO
+if (resultadoDado <= 5) {
+    alert("❌ Você errou o ataque!");
     fimTurnoHeroi();
+    return;
 }
 
+let dano;
 
-//botao de ataque critico
+//  CRÍTICO NATURAL
+if (resultadoDado === 20) {
+    dano = calcularDano(heroi.atk) * 2;
+    alert("☠️ CRÍTICO NATURAL!");
+}
+//  ACERTO FORTE
+else if (resultadoDado >= 15) {
+    dano = calcularDano(heroi.atk) * 1.4;
+}
+//  ACERTO NORMAL
+else {
+    dano = calcularDano(heroi.atk);
+}
+
+vilao.hp -= Math.floor(dano);
+if (vilao.hp < 0) vilao.hp = 0;
+
+manaAtual += 50;
+if (manaAtual > 100) manaAtual = 100;
+atualizarMana();
+
+atualizarVilao();
+fimTurnoHeroi();
+
+
+
+
+// 17 - BOTÃO DE CRÍTICO
+
 function critico() {
     if (!podeAgir()) return;
 
@@ -630,6 +718,7 @@ function critico() {
         return;
     }
 
+    // dano crítico do herói aplicando um multiplicado e reduz a vida do vilão com o valor final do ataque
     const dano = calcularDano(heroi.crt) * 1.8;
     vilao.hp -= Math.floor(dano);
 
@@ -643,25 +732,35 @@ function critico() {
 
 
 
-//botao de cura
+// 18 - BOTÃO DE CURA 
+
 function curar() {
+
+    // Verifica se o herói pode agir neste turno; se não puder, a função é encerrada
     if (!podeAgir()) return;
 
+    // Calcula o valor da cura com base no atributo de cura do herói e aplica o multiplicador atual
     const cura = Math.floor(heroi.cura * mult);
+
+    // adiciona a cura a vida atual do herói
     heroi.hp += cura;
+
+    // Garante que a vida do herói não ultrapasse o valor máximo permitido
     if (heroi.hp > heroi.hpMax) heroi.hp = heroi.hpMax;
 
     manaAtual += 50;
-if (manaAtual > 100) manaAtual = 100;
-atualizarMana();
+    if (manaAtual > 100) manaAtual = 100;
 
+    atualizarMana();
     atualizarHeroi();
     fimTurnoHeroi();
 }
 
 
-// turno do vilão de ataque
-// turno do vilão de ataque
+
+
+// 19 - TURNO DO VILÃO
+
 function turnoVilao() {
     turno = "vilao";
 
@@ -699,7 +798,11 @@ function turnoVilao() {
 }
 
 
-//verifica se pode agir
+
+
+
+// 20 - PODE AGIR 
+
 function podeAgir() {
     if (!vilao) {
         alert("Gere um inimigo primeiro!");
@@ -716,7 +819,12 @@ function podeAgir() {
     return true;
 }
 
-// fim do turno do herói
+
+
+
+
+//21 - FIM DO TURNO HEROI
+
 function fimTurnoHeroi() {
     dadoRolado = false; //  libera o dado pro próximo turno
     mult = 1;
@@ -731,7 +839,11 @@ function fimTurnoHeroi() {
     turnoVilao();
 }
 
-// mostra modal de derrota
+
+
+
+
+// 22 - MODAL DE DERROTA
 function mostrarDerrota() {
     const overlay = document.getElementById("overlay-derrota");
     if (overlay) {
@@ -739,7 +851,11 @@ function mostrarDerrota() {
     }
 }
 
-// mostra modal de vitória , recompensas e desbloqueio de fase
+
+
+
+// 22 - MODAL DE DERROTA , RECOMPENSAS E DESBLOQUEIO DE FASE
+
 function mostrarVitoria() {
 
     // recompensas
@@ -750,7 +866,7 @@ function mostrarVitoria() {
     goldTotal += goldGanho;
     xpTotal += xpGanho;
 
-    while (xpTotal >= 100) {
+    while (xpTotal >= 100) { // a cada 100 de xp sobe um nivel 
         xpTotal -= 100;
         nivel++;
     }
@@ -770,6 +886,7 @@ function mostrarVitoria() {
     if (faseAtual.includes("pageCombate2") && faseLiberada < 3) {
         localStorage.setItem("faseLiberada", 3);
     }
+    // controla o progresso do jogador salvando no localStorage qual fase já foi liberada, permitindo o desbloqueio gradual conforme o jogador avança pelas páginas de combate
 
     // modal de vitória
     const texto = document.querySelector("#overlay-vitoria p");
@@ -789,23 +906,31 @@ function mostrarVitoria() {
                 <p>+ ${xpGanho} XP</p>
             </div>
         `;
-    }
+    } // atualiza o gold e xp do elemento html do modal pelos dados certos 
 
     abrirModal("overlay-vitoria");
 }
 
 
-// função para ir para a página inicial
+
+
+
+// 23 - IR PARA PÁGINA DE INICIO
+
 function irParaInicio() {
     window.location.href = "pageInicial.html";
 }
 
 
-// lógica de desbloqueio de fases
-document.addEventListener("DOMContentLoaded", () => {
-    const faseLiberada = parseInt(localStorage.getItem("faseLiberada")) || 1;
 
-    for (let i = 1; i <= faseLiberada; i++) {
+
+
+// 24 - DOM CONTENT LOADED 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const faseLiberada = parseInt(localStorage.getItem("faseLiberada")) || 1; //fase que comeca
+
+    for (let i = 1; i <= faseLiberada; i++) { // apos concluir a primeir e somado mais um e a segunda e desbloqueada trocando a class paea trocar a estilização da missao na tela 
         const fase = document.getElementById(`fase-${i}`);
         if (fase) {
             fase.classList.remove("a-transparente");
@@ -817,7 +942,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = faseLiberada + 1; i <= 3; i++) {
         const fase = document.getElementById(`fase-${i}`);
         if (fase) {
-            fase.style.pointerEvents = "none";
+            fase.style.pointerEvents = "none"; // bloqueia eventos 
         }
     }
 
@@ -854,7 +979,7 @@ const ARAKH = {
 
 const imgArakh = document.getElementById("img-arakh");
 
-if (imgArakh) {
+if (imgArakh) { // ao clicar na imagem de arakh e possivel ver o modal da aura do vazio 
     imgArakh.addEventListener("click", () => {
         abrirModal("overlay-arakh");
     });
@@ -876,8 +1001,11 @@ document.addEventListener("click", () => {
     }
 }, { once: true });
 
+// libera os áudios do jogo após a primeira interação do usuário,
+// evitando bloqueio automático de áudio pelos navegadores
 
-//atualizacao de mana 
+
+// 25 ATUALIZAR MANA 
 function atualizarMana() {
     const manaBar = document.getElementById("mana-fill");
     const btnCritico = document.querySelector(".btn-critico");
