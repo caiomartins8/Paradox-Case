@@ -1,4 +1,5 @@
 //  01 - CARREGAR PÁGINA
+console.log("teste")
 
 function iniciarCarregamento() {
     const barra = document.querySelector(".loader-bar");
@@ -169,8 +170,7 @@ let resultadoDado = null; // guarda o valor real do D20
 //08 - DOM CONTENT LOADED
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    if (document.body.classList.contains("page-loading")) { //espera o HTML carregar e roda o loading só na página certa
+    if (document.body.classList.contains("page-loading")) {
         iniciarCarregamento();
     }
 });
@@ -656,40 +656,37 @@ function rolarDado() {
 
 // 16 - BOTÃO DE ATAQUE 
 
-if (!podeAgir()) return;
+function atacar() {
+    if (!podeAgir()) return;
 
-// ERRO
-if (resultadoDado <= 5) {
-    alert("❌ Você errou o ataque!");
+    if (resultadoDado <= 5) {
+        alert("❌ Você errou o ataque!");
+        fimTurnoHeroi();
+        return;
+    }
+
+    let dano;
+
+    if (resultadoDado === 20) {
+        dano = calcularDano(heroi.atk) * 2;
+        alert("☠️ CRÍTICO NATURAL!");
+    } else if (resultadoDado >= 15) {
+        dano = calcularDano(heroi.atk) * 1.4;
+    } else {
+        dano = calcularDano(heroi.atk);
+    }
+
+    vilao.hp -= Math.floor(dano);
+    if (vilao.hp < 0) vilao.hp = 0;
+
+    manaAtual += 50;
+    if (manaAtual > 100) manaAtual = 100;
+
+    atualizarMana();
+    atualizarVilao();
     fimTurnoHeroi();
-    return;
 }
 
-let dano;
-
-//  CRÍTICO NATURAL
-if (resultadoDado === 20) {
-    dano = calcularDano(heroi.atk) * 2;
-    alert("☠️ CRÍTICO NATURAL!");
-}
-//  ACERTO FORTE
-else if (resultadoDado >= 15) {
-    dano = calcularDano(heroi.atk) * 1.4;
-}
-//  ACERTO NORMAL
-else {
-    dano = calcularDano(heroi.atk);
-}
-
-vilao.hp -= Math.floor(dano);
-if (vilao.hp < 0) vilao.hp = 0;
-
-manaAtual += 50;
-if (manaAtual > 100) manaAtual = 100;
-atualizarMana();
-
-atualizarVilao();
-fimTurnoHeroi();
 
 
 
